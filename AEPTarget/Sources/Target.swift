@@ -325,6 +325,7 @@ public class Target: NSObject, Extension {
                 continue
             }
 
+            // dispatch internal analytics for target event with analytics payload, if available
             if let analyticsPayload = getAnalyticsForTargetPayload(json: mboxJson) {
                 dispatchAnalyticsForTargetRequest(payload: preprocessAnalyticsPayload(analyticsPayload, sessionId: targetState.sessionId))
             }
@@ -383,6 +384,7 @@ public class Target: NSObject, Extension {
             return
         }
 
+        // dispatch internal analytics for target event with click-tracking analytics payload, if available
         if let analyticsPayload = metric.analyticsPayload {
             dispatchAnalyticsForTargetRequest(payload: preprocessAnalyticsPayload(analyticsPayload, sessionId: targetState.sessionId))
         }
@@ -508,10 +510,13 @@ public class Target: NSObject, Extension {
             let (content, responseTokens) = extractMboxContentAndResponseTokens(mboxJson: mboxJson)
             let analyticsPayload = getAnalyticsForTargetPayload(json: mboxJson)
 
+            // dispatch internal analytics for target event with analytics payload, if available
             if let payload = analyticsPayload {
                 dispatchAnalyticsForTargetRequest(payload: preprocessAnalyticsPayload(payload, sessionId: targetState.sessionId))
             }
             let clickmetric = extractClickMetric(mboxJson: mboxJson)
+
+            // package analytics payload and response tokens to be returned in request callback
             let responsePayload = packageMboxResponsePayload(responseTokens: responseTokens, analyticsPayload: analyticsPayload, metricsAnalyticsPayload: clickmetric.analyticsPayload)
 
             dispatchMboxContent(event: event, content: content ?? targetRequest.defaultContent, data: responsePayload, responsePairId: targetRequest.responsePairId)
@@ -801,7 +806,9 @@ public class Target: NSObject, Extension {
             let analyticsPayload = getAnalyticsForTargetPayload(json: cachedMbox)
             let metrics = extractClickMetric(mboxJson: cachedMbox)
 
+            // package analytics payload and response tokens to be returned in request callback
             let responsePayload = packageMboxResponsePayload(responseTokens: responseTokens, analyticsPayload: analyticsPayload, metricsAnalyticsPayload: metrics.analyticsPayload)
+
             dispatchMboxContent(event: event, content: content ?? request.defaultContent, data: responsePayload, responsePairId: request.responsePairId)
         }
 
@@ -811,8 +818,8 @@ public class Target: NSObject, Extension {
     /// Return Mbox content and response tokens from mboxJson, if any.
     /// - Parameters:
     ///     - mboxJson: `[String: Any]` target response dictionary
-    /// - Returns: `String` mbox content and `Dictionary` containing response tokens, if any otherwise returns nil
-    private func extractMboxContentAndResponseTokens(mboxJson: [String: Any]) -> (String?, [String: String]?) {
+    /// - Returns: tuple containg `String` mbox content and `Dictionary` containing response tokens, if any.
+    private func extractMboxContentAndResponseTokens(mboxJson: [String: Any]) -> (content: String?, responseTokens: [String: String]?) {
         guard let optionsArray = mboxJson[TargetConstants.TargetJson.OPTIONS] as? [[String: Any?]?] else {
             Log.debug(label: Target.LOG_TAG, "extractMboxContent - unable to extract mbox contents, options array is nil")
             return (nil, nil)
@@ -897,7 +904,7 @@ public class Target: NSObject, Extension {
     /// Extracts click metric info from the Target response if available.
     /// - Parameters:
     ///     - mboxJson: Mbox dictionary.
-    /// - Returns: `Tuple` containing click token and click tracking analytics payload.
+    /// - Returns: tuple containing `String` click token and `Dictionary` containing click tracking analytics payload.
     private func extractClickMetric(mboxJson: [String: Any]) -> (token: String?, analyticsPayload: [String: String]?) {
         guard let metrics = mboxJson[TargetConstants.TargetJson.METRICS] as? [[String: Any]?] else {
             return (nil, nil)

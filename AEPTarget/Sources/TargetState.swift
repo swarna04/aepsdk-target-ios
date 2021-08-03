@@ -190,7 +190,7 @@ class TargetState {
             let name = mbox.key
             var mboxNode = mbox.value
             if !name.isEmpty, prefetchedMboxJsonDicts[name] == nil {
-                // remove not accepted keys
+                // Save click metrics, it will be used when sending notifications later.
                 for key in mboxNode.keys {
                     if !LOADED_MBOX_ACCEPTED_KEYS.contains(key) {
                         mboxNode.removeValue(forKey: key)

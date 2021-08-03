@@ -345,6 +345,31 @@ class TargetClickedLocationFunctionalTests: TargetFunctionalTestsBase {
                 XCTFail("Location clicked should trigger a notification request to Target.")
                 return nil
             }
+
+            guard let payloadDictionary = self.payloadAsDictionary(request.connectPayload) else {
+                XCTFail("Location clicked notification payload should be valid.")
+                return nil
+            }
+
+            guard let notificationsArray = payloadDictionary["notifications"] as? [[String: Any]] else {
+                XCTFail("Location clicked notification should be present in the request payload.")
+                return nil
+            }
+
+            XCTAssertEqual(1, notificationsArray.count)
+            let notification = notificationsArray[0]
+
+            let notificationId = notification["id"] as? String
+            XCTAssertEqual(false, notificationId?.isEmpty)
+
+            let tokens = notification["tokens"] as? [String]
+            XCTAssertEqual(1, tokens?.count)
+            XCTAssertEqual("ABPi/uih7s0vo6/8kqyxjA==", tokens?[0])
+            XCTAssertEqual("click", notification["type"] as? String)
+
+            let mbox = notification["mbox"] as? [String: Any]
+            XCTAssertEqual("t_test_01", mbox?["name"] as? String)
+
             return nil
         }
 
