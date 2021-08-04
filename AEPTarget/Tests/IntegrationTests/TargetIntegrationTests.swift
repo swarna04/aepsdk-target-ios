@@ -610,6 +610,11 @@ class TargetIntegrationTests: XCTestCase {
             if request.url.absoluteString.contains("https://acopprod3.tt.omtrdc.net/rest/v1/delivery/?client=acopprod3&sessionId=") {
                 return (data: responseString.data(using: .utf8), response: validResponse, error: nil)
             }
+
+            if request.url.absoluteString.contains("https://mboxedge35.tt.omtrdc.net/rest/v1/delivery/?client=acopprod3&sessionId=") {
+                XCTFail("retrieveLocationContant should not send a network request to Target if requested mboxes are already prefetched.")
+                return nil
+            }
             return nil
         }
 
