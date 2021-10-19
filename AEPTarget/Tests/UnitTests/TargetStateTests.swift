@@ -117,4 +117,63 @@ class TargetStateTests: XCTestCase {
         ])
         XCTAssertEqual(10.0, targetState.networkTimeout)
     }
+
+    func testSessionId() {
+        let targetState = TargetState()
+        targetState.updateConfigurationSharedState([
+            "target.clientCode": "code_123",
+            "global.privacy": "optedin",
+            "target.timeout": 10,
+            "target.sessionTimeout": 1800,
+        ])
+
+        let sessionId = targetState.sessionId
+        XCTAssertFalse(sessionId.isEmpty)
+
+        targetState.resetSessionId()
+        let newSessionId = targetState.sessionId
+        XCTAssertFalse(newSessionId.isEmpty)
+
+        XCTAssertNotEqual(sessionId, newSessionId)
+    }
+
+    func testSessionId_whenSessionIsExpired() {
+        let targetState = TargetState()
+        targetState.updateConfigurationSharedState([
+            "target.clientCode": "code_123",
+            "global.privacy": "optedin",
+            "target.timeout": 10,
+            "target.sessionTimeout": 2,
+        ])
+
+        let sessionId = targetState.sessionId
+        XCTAssertFalse(sessionId.isEmpty)
+
+        sleep(3)
+
+        let newSessionId = targetState.sessionId
+        XCTAssertFalse(newSessionId.isEmpty)
+
+        XCTAssertNotEqual(sessionId, newSessionId)
+    }
+
+    func testSessionId_whenSessionIsNotExpired() {
+        let targetState = TargetState()
+        targetState.updateConfigurationSharedState([
+            "target.clientCode": "code_123",
+            "global.privacy": "optedin",
+            "target.timeout": 10,
+            "target.sessionTimeout": 100,
+        ])
+
+        let sessionId = targetState.sessionId
+        XCTAssertFalse(sessionId.isEmpty)
+
+        sleep(3)
+
+        let newSessionId = targetState.sessionId
+        XCTAssertFalse(newSessionId.isEmpty)
+
+        XCTAssertEqual(sessionId, newSessionId)
+    }
 }
