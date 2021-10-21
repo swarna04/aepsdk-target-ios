@@ -17,11 +17,7 @@ import XCTest
 
 class TargetStateTests: XCTestCase {
     override func setUpWithError() throws {
-        for _ in 0 ... 5 {
-            for key in UserDefaults.standard.dictionaryRepresentation().keys {
-                UserDefaults.standard.removeObject(forKey: key)
-            }
-        }
+        UserDefaults.clear()
         ServiceProvider.shared.namedKeyValueService.setAppGroup(nil)
     }
 
