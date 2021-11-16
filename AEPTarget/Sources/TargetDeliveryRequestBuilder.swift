@@ -58,8 +58,8 @@ enum TargetDeliveryRequestBuilder {
         var qaMode: [String: AnyCodable]?
         if
             let qaModeParameters = qaModeParameters,
-           !qaModeParameters.isEmpty,
-           let qaModeData = qaModeParameters.data(using: .utf8)
+            !qaModeParameters.isEmpty,
+            let qaModeData = qaModeParameters.data(using: .utf8)
         {
             let qaModeDict = try? JSONSerialization.jsonObject(with: qaModeData, options: []) as? [String: Any]
             qaMode = AnyCodable.from(dictionary: qaModeDict?[TargetConstants.TargetJson.QA_MODE] as? [String: Any])
