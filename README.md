@@ -55,11 +55,11 @@ targets: [
 
 ### Binaries
 
-To generate an `AEPTarget.xcframework`, run the following command:
+Run the following command, from the project root directory, to generate the `AEPTarget.xcframework` in the `build` directory. But, first run `make pod-install` command to ensure the dependencies are installed.
 
-```
+``` 
 make archive
-```
+``` 
 
 ## Development
 

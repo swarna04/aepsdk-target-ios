@@ -90,6 +90,7 @@ enum TargetConstants {
         static let METRICS = "metrics"
         static let HTML = "html"
         static let JSON = "json"
+        static let QA_MODE = "qaMode"
         static let ANALYTICS = "analytics"
         static let ANALYTICS_PAYLOAD = "payload"
         /// For A4T requests event data.
