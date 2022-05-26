@@ -70,17 +70,12 @@ class TestableExtensionRuntime: ExtensionRuntime {
         }
     }
 
-    public func getXDMSharedState(extensionName: String, event: Event?) -> SharedStateResult? {
-        return otherXDMSharedStates["\(extensionName)-\(String(describing: event?.id))"] ?? nil
+    public func getXDMSharedState(extensionName: String, event: Event?, barrier: Bool = false) -> SharedStateResult? {
+        getXDMSharedState(extensionName: extensionName, event: event, barrier: barrier, resolution: .any)
     }
     
     func getXDMSharedState(extensionName: String, event: Event?, barrier: Bool, resolution: SharedStateResolution) -> SharedStateResult? {
         return otherXDMSharedStates["\(extensionName)-\(String(describing: event?.id))"] ?? nil
-    }
-    
-
-    func getXDMSharedState(extensionName _: String, event _: Event?, barrier _: Bool) -> SharedStateResult? {
-        return nil
     }
 
     func simulateSharedState(extensionName: String, event: Event?, data: (value: [String: Any]?, status: SharedStateStatus)) {
