@@ -156,7 +156,6 @@ class TargetState {
 
     /// Remove storedSessionId and remove the key from datastore
     func resetSessionId() {
-        // dataStore.remove(key: TargetConstants.DataStoreKeys.SESSION_ID)
         storedSessionId = ""
     }
 
