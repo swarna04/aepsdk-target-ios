@@ -78,7 +78,8 @@ struct ContentView: View {
                     Button("Set Third Party Id") {
                         setThirdPartyId()
                     }.padding(10)
-                    
+                }
+                Group {
                     Text("Tnt id - \(tntId)")
                     Button("Get Tnt Id") {
                         getTntId()

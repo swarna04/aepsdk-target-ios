@@ -86,7 +86,7 @@ public class Target: NSObject, Extension {
             }
 
             if let sessionId = eventData[TargetConstants.EventDataKeys.TARGET_SESSION_ID] as? String {
-                setSessionId(sessionId: sessionId, event: event)
+                setSessionId(sessionId: sessionId)
                 return
             }
         }
@@ -711,8 +711,7 @@ public class Target: NSObject, Extension {
     /// If the privacy status is opt out or the provided session Id is empty,  the corresponding key is removed from the data store.
     /// - Parameters:
     ///     - sessionId: new session Id that needs to be set in the SDK
-    ///     - event: event which has the session Id in event data
-    private func setSessionId(sessionId: String, event: Event) {
+    private func setSessionId(sessionId: String) {
         if targetState.privacyStatusIsOptOut {
             Log.debug(label: Target.LOG_TAG, "setSessionId - Cannot update Target sessionId due to opt out privacy status.")
             return
@@ -858,7 +857,7 @@ public class Target: NSObject, Extension {
             return (nil, nil)
         }
 
-        var contentBuilder: String = ""
+        var contentBuilder = ""
         var responseTokens: [String: String]?
 
         for option in optionsArray {
