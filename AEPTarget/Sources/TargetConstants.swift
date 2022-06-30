@@ -180,6 +180,7 @@ enum TargetConstants {
         static let PREFETCH_RESULT = "prefetchresult"
         static let LOAD_REQUESTS = "request"
         static let THIRD_PARTY_ID = "thirdpartyid"
+        static let TARGET_SESSION_ID = "sessionid"
         static let RESET_EXPERIENCE = "resetexperience"
         static let CLEAR_PREFETCH_CACHE = "clearcache"
         static let PREVIEW_RESTART_DEEP_LINK = "restartdeeplink"

@@ -79,11 +79,19 @@ public class Target: NSObject, Extension {
     }
 
     private func handleRequestIdentity(_ event: Event) {
-        if let eventData = event.data, let thirdPartyId = eventData[TargetConstants.EventDataKeys.THIRD_PARTY_ID] as? String {
-            setThirdPartyId(thirdPartyId: thirdPartyId, event: event)
-        } else {
-            dispatchRequestIdentityResponse(triggerEvent: event)
+        if let eventData = event.data {
+            if let thirdPartyId = eventData[TargetConstants.EventDataKeys.THIRD_PARTY_ID] as? String {
+                setThirdPartyId(thirdPartyId: thirdPartyId, event: event)
+                return
+            }
+
+            if let sessionId = eventData[TargetConstants.EventDataKeys.TARGET_SESSION_ID] as? String {
+                setSessionId(sessionId: sessionId, event: event)
+                return
+            }
         }
+
+        dispatchRequestIdentityResponse(triggerEvent: event)
     }
 
     private func handleConfigurationResponseContent(_ event: Event) {
@@ -536,6 +544,7 @@ public class Target: NSObject, Extension {
         if let tntId = targetState.tntId {
             eventData[TargetConstants.EventDataKeys.TNT_ID] = tntId
         }
+        eventData[TargetConstants.EventDataKeys.TARGET_SESSION_ID] = targetState.sessionId
         dispatch(event: triggerEvent.createResponseEvent(name: TargetConstants.EventName.IDENTITY_RESPONSE, type: EventType.target, source: EventSource.responseIdentity, data: eventData))
     }
 
@@ -696,6 +705,30 @@ public class Target: NSObject, Extension {
 
         setThirdPartyIdInternal(thirdPartyId: thirdPartyId)
         createSharedState(data: eventData, event: event)
+    }
+
+    /// Saves the provided Target session Id in the data store.
+    /// If the privacy status is opt out or the provided session Id is empty,  the corresponding key is removed from the data store.
+    /// - Parameters:
+    ///     - sessionId: new session Id that needs to be set in the SDK
+    ///     - event: event which has the session Id in event data
+    private func setSessionId(sessionId: String, event: Event) {
+        if targetState.privacyStatusIsOptOut {
+            Log.debug(label: Target.LOG_TAG, "setSessionId - Cannot update Target sessionId due to opt out privacy status.")
+            return
+        }
+
+        guard !sessionId.isEmpty else {
+            Log.debug(label: Target.LOG_TAG, "setSessionId - Provided sessionId is empty, resetting the Target session.")
+            resetSession()
+            return
+        }
+
+        if sessionId != targetState.storedSessionId {
+            Log.trace(label: Target.LOG_TAG, "setSessionId - Updated Target session Id with the provided value \(sessionId).")
+            targetState.storedSessionId = sessionId
+        }
+        targetState.updateSessionTimestamp()
     }
 
     /// Saves the tntId to the Target DataStore or remove its key in the dataStore if the tntId is nil.
