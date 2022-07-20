@@ -754,7 +754,7 @@ public class Target: NSObject, Extension {
     ///
     /// If a valid tntId is provided and the privacy status is opted out or the provided tntId is same as the existing value, then the method returns with no further action.
     /// If nil value is provided for the tntId, then both tntId and edge host values are removed from the Target data store.
-    /// 
+    ///
     /// - Parameters:
     ///     - tntId: string containing tntId to be set in the SDK.
     private func setTntIdInternal(tntId: String?) {
@@ -772,7 +772,8 @@ public class Target: NSObject, Extension {
         if
             let locationHintRange = tntId?.range(of: "(?<=[0-9A-Za-z-]\\.)([\\d][^\\D]*)(?=_)", options: .regularExpression),
             let locationHint = tntId?[locationHintRange],
-            !locationHint.isEmpty {
+            !locationHint.isEmpty
+        {
             let edgeHost = String(format: TargetConstants.API_URL_HOST_BASE, String(format: TargetConstants.EDGE_HOST_BASE, String(locationHint)))
             Log.debug(label: Target.LOG_TAG, "setTntIdInternal - The edge host value derived from the given tntId \(String(describing: tntId)) is \(edgeHost).")
             targetState.updateEdgeHost(edgeHost)
