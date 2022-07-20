@@ -12,7 +12,7 @@
 
 import Foundation
 enum TestConstants {
-    static let LAUNCH_ID = ""
+    static let LAUNCH_ID = "3149c49c3910/d5a4ae369796/launch-8c8bcf6b928b-development"
     static let GRIFFON_URL = ""
     static let DEEP_LINK = ""
 }

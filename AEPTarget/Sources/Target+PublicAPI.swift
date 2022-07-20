@@ -226,6 +226,20 @@ import Foundation
         }
     }
 
+    /// Sets the Test and Target user identifier.
+    /// The provided Tnt Id is persisted in the SDK and attached to all subsequent Target requests. It is used to
+    /// derive the edge host value in the SDK, which is also persisted and used in future Target requests.
+    ///
+    /// This ID is preserved between app upgrades, is saved and restored during the standard application backup process,
+    /// and is removed at uninstall, upon privacy status update to opt out or when AEPTarget.resetExperience is called.
+    ///
+    /// - Parameter id: a string containing the value of the Tnt Id to be set in the SDK.
+    static func setTntId(_ id: String?) {
+        let eventData = [TargetConstants.EventDataKeys.TNT_ID: id ?? ""]
+        let event = Event(name: TargetConstants.EventName.REQUEST_IDENTITY, type: EventType.target, source: EventSource.requestIdentity, data: eventData)
+        MobileCore.dispatch(event: event)
+    }
+
     /// Gets the Test and Target user identifier.
     /// Retrieves the TnT ID returned by the Target server for this visitor. The TnT ID is set to the
     /// Mobile SDK after a successful call to prefetch content or load requests.
