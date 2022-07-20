@@ -332,14 +332,14 @@ class TargetTntIdFunctionalTests: TargetFunctionalTestsBase {
         XCTAssertNil(target.targetState.tntId)
         XCTAssertNil(target.targetState.edgeHost)
 
-        guard let eventListener: EventListener = mockRuntime.listeners["com.adobe.eventType.target-com.adobe.eventSource.requestContent"] else {
+        guard let prefetchEventListener: EventListener = mockRuntime.listeners["com.adobe.eventType.target-com.adobe.eventSource.requestContent"] else {
             XCTFail()
             return
         }
         XCTAssertTrue(target.readyForEvent(prefetchEvent))
         
         // handles the prefetch event
-        eventListener(prefetchEvent)
+        prefetchEventListener(prefetchEvent)
 
         XCTAssertEqual("DE03D4AD-1FFE-421F-B2F2-303BF26822C1.35_0", target.targetState.tntId)
         XCTAssertEqual("mboxedge35.tt.omtrdc.net", target.targetState.edgeHost)
@@ -361,16 +361,16 @@ class TargetTntIdFunctionalTests: TargetFunctionalTestsBase {
             TargetConstants.EventDataKeys.TNT_ID: "4DBCC39D-4ACA-47D4-A7D2-A85C1C0CC382.32_0",
         ]
         let setTntIdEvent = Event(name: "TargetRequestIdentity", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
-        guard let eventListener: EventListener = mockRuntime.listeners["com.adobe.eventType.target-com.adobe.eventSource.requestIdentity"] else {
+        guard let identityEventListener: EventListener = mockRuntime.listeners["com.adobe.eventType.target-com.adobe.eventSource.requestIdentity"] else {
             XCTFail()
             return
         }
-        eventListener(setTntIdEvent)
+        identityEventListener(setTntIdEvent)
         XCTAssertEqual(target.targetState.tntId, "4DBCC39D-4ACA-47D4-A7D2-A85C1C0CC382.32_0")
         XCTAssertEqual(target.targetState.edgeHost, "mboxedge32.tt.omtrdc.net")
         
         let prefetchEvent2 = Event(name: "TargetPrefetchRequest", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
-        eventListener(prefetchEvent2)
+        prefetchEventListener(prefetchEvent2)
     }
 
 }
