@@ -724,8 +724,8 @@ public class Target: NSObject, Extension {
         }
 
         if sessionId != targetState.storedSessionId {
-            Log.trace(label: Target.LOG_TAG, "setSessionId - Updated Target session Id with the provided value \(sessionId).")
-            targetState.storedSessionId = sessionId
+            Log.debug(label: Target.LOG_TAG, "setSessionId - Updated Target session Id with the provided value \(sessionId).")
+            targetState.updateSessionId(sessionId)
         }
         targetState.updateSessionTimestamp()
     }
@@ -768,7 +768,7 @@ public class Target: NSObject, Extension {
 
     /// Resets current  sessionId and the sessionTimestampInSeconds
     private func resetSession() {
-        targetState.resetSessionId()
+        targetState.updateSessionId("")
         targetState.updateSessionTimestamp(reset: true)
     }
 
