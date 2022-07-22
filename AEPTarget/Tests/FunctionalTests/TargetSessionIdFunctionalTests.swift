@@ -23,7 +23,7 @@ class TargetSessionIdFunctionalTests: TargetFunctionalTestsBase {
         let data: [String: Any] = [
             "sessionid": "mockSessionId",
         ]
-        let event = Event(name: "TargetRequestIdentity", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
+        let event = Event(name: "TargetSetSessionIdentifier", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
         
         // creates a configuration shared state
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: event, data: (value: mockConfigSharedState, status: .set))
@@ -84,7 +84,7 @@ class TargetSessionIdFunctionalTests: TargetFunctionalTestsBase {
             "sessionid": "",
         ]
 
-        let event = Event(name: "TargetRequestIdentity", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
+        let event = Event(name: "TargetSetSessionIdentifier", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: event, data: (value: mockConfigSharedState, status: .set))
         target.onRegistered()
         guard let eventListener: EventListener = mockRuntime.listeners["com.adobe.eventType.target-com.adobe.eventSource.requestIdentity"] else {
@@ -100,7 +100,7 @@ class TargetSessionIdFunctionalTests: TargetFunctionalTestsBase {
             "sessionid": "mockSessionId",
         ]
 
-        let event = Event(name: "TargetRequestIdentity", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
+        let event = Event(name: "TargetSetSessionIdentifier", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: event, data: (value: mockConfigSharedState, status: .set))
         mockConfigSharedState["global.privacy"] = "optedout"
         target.targetState.updateConfigurationSharedState(mockConfigSharedState)
@@ -115,10 +115,10 @@ class TargetSessionIdFunctionalTests: TargetFunctionalTestsBase {
     }
     
     func testGetSessionId() {
-        let event = Event(name: "TargetRequestIdentity", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: nil)
+        let event = Event(name: "TargetGetSessionIdentifier", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: nil)
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: event, data: (value: mockConfigSharedState, status: .set))
         target.onRegistered()
-        target.targetState.storedSessionId = "mockSessionId"
+        target.targetState.updateSessionId("mockSessionId")
         guard let eventListener: EventListener = mockRuntime.listeners["com.adobe.eventType.target-com.adobe.eventSource.requestIdentity"] else {
             XCTFail()
             return
@@ -137,10 +137,10 @@ class TargetSessionIdFunctionalTests: TargetFunctionalTestsBase {
     }
 
     func testGetSessionId_withEmptyStoredId() {
-        let event = Event(name: "TargetRequestIdentity", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: nil)
+        let event = Event(name: "TargetGetSessionIdentifier", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: nil)
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: event, data: (value: mockConfigSharedState, status: .set))
         target.onRegistered()
-        target.targetState.storedSessionId = ""
+        target.targetState.updateSessionId("")
         guard let eventListener: EventListener = mockRuntime.listeners["com.adobe.eventType.target-com.adobe.eventSource.requestIdentity"] else {
             XCTFail()
             return
