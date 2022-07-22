@@ -163,6 +163,7 @@ enum TargetConstants {
         static let PREFETCH_REQUESTS = "TargetPrefetchRequest"
         static let PREFETCH_RESPOND = "TargetPrefetchResponse"
         static let REQUEST_IDENTITY = "TargetRequestIdentity"
+        static let SET_TNT_ID = "TargetSetTnTIdentifier"
         static let REQUEST_RESET = "TargetRequestReset"
         static let CLEAR_PREFETCH_CACHE = "TargetClearPrefetchCache"
         static let SET_PREVIEW_DEEPLINK = "TargetSetPreviewRestartDeeplink"

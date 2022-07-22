@@ -26,7 +26,7 @@ class TargetTntIdFunctionalTests: TargetFunctionalTestsBase {
         let data: [String: Any] = [
             TargetConstants.EventDataKeys.TNT_ID: "66E5C681-4F70-41A2-86AE-F1E151443B10.35_0",
         ]
-        let setTntIdEvent = Event(name: "TargetRequestIdentity", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
+        let setTntIdEvent = Event(name: "TargetSetTnTIdentifier", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
         
         // creates a configuration shared state
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: setTntIdEvent, data: (value: mockConfigSharedState, status: .set))
@@ -96,7 +96,7 @@ class TargetTntIdFunctionalTests: TargetFunctionalTestsBase {
             TargetConstants.EventDataKeys.TNT_ID: "",
         ]
 
-        let setTntIdEvent = Event(name: "TargetRequestIdentity", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
+        let setTntIdEvent = Event(name: "TargetSetTnTIdentifier", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: setTntIdEvent, data: (value: mockConfigSharedState, status: .set))
         
         // registers the event listeners for Target extension
@@ -169,7 +169,7 @@ class TargetTntIdFunctionalTests: TargetFunctionalTestsBase {
             TargetConstants.EventDataKeys.TNT_ID: "66E5C681-4F70-41A2-86AE-F1E151443B10.35_0",
         ]
 
-        let setTntIdEvent = Event(name: "TargetRequestIdentity", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
+        let setTntIdEvent = Event(name: "TargetSetTnTIdentifier", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
         mockConfigSharedState["global.privacy"] = "optedout"
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: setTntIdEvent, data: (value: mockConfigSharedState, status: .set))
         target.targetState.updateConfigurationSharedState(mockConfigSharedState)
@@ -192,7 +192,7 @@ class TargetTntIdFunctionalTests: TargetFunctionalTestsBase {
             TargetConstants.EventDataKeys.TNT_ID: "66E5C681-4F70-41A2-86AE-F1E151443B10",
         ]
 
-        let setTntIdEvent = Event(name: "TargetRequestIdentity", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
+        let setTntIdEvent = Event(name: "TargetSetTnTIdentifier", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: setTntIdEvent, data: (value: mockConfigSharedState, status: .set))
         
         // registers the event listeners for Target extension
@@ -213,7 +213,7 @@ class TargetTntIdFunctionalTests: TargetFunctionalTestsBase {
             TargetConstants.EventDataKeys.TNT_ID: "66E5C681-4F70-41A2-86AE-F1E151443B10.a1a_0",
         ]
 
-        let setTntIdEvent = Event(name: "TargetRequestIdentity", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
+        let setTntIdEvent = Event(name: "TargetSetTnTIdentifier", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: setTntIdEvent, data: (value: mockConfigSharedState, status: .set))
         
         // registers the event listeners for Target extension
@@ -230,7 +230,7 @@ class TargetTntIdFunctionalTests: TargetFunctionalTestsBase {
     }
 
     func testGetTntId() {
-        let event = Event(name: "TargetRequestIdentity", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: nil)
+        let event = Event(name: "TargetGetTnTIdentifier", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: nil)
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: event, data: (value: mockConfigSharedState, status: .set))
         
         // registers the event listeners for Target extension
@@ -254,7 +254,7 @@ class TargetTntIdFunctionalTests: TargetFunctionalTestsBase {
     }
 
     func testGetTntId_withoutCachedTntId() {
-        let event = Event(name: "TargetRequestIdentity", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: nil)
+        let event = Event(name: "TargetGetTnTIdentifier", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: nil)
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: event, data: (value: mockConfigSharedState, status: .set))
         
         // registers the event listeners for Target extension
@@ -360,7 +360,7 @@ class TargetTntIdFunctionalTests: TargetFunctionalTestsBase {
         let data: [String: Any] = [
             TargetConstants.EventDataKeys.TNT_ID: "4DBCC39D-4ACA-47D4-A7D2-A85C1C0CC382.32_0",
         ]
-        let setTntIdEvent = Event(name: "TargetRequestIdentity", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
+        let setTntIdEvent = Event(name: "TargetGetTnTIdentifier", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestIdentity", data: data)
         guard let identityEventListener: EventListener = mockRuntime.listeners["com.adobe.eventType.target-com.adobe.eventSource.requestIdentity"] else {
             XCTFail()
             return

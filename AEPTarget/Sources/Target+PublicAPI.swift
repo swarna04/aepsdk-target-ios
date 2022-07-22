@@ -239,7 +239,7 @@ import Foundation
     /// - Parameter id: a string containing the value of the Tnt Id to be set in the SDK.
     static func setTntId(_ id: String?) {
         let eventData = [TargetConstants.EventDataKeys.TNT_ID: id ?? ""]
-        let event = Event(name: TargetConstants.EventName.REQUEST_IDENTITY, type: EventType.target, source: EventSource.requestIdentity, data: eventData)
+        let event = Event(name: TargetConstants.EventName.SET_TNT_ID, type: EventType.target, source: EventSource.requestIdentity, data: eventData)
         MobileCore.dispatch(event: event)
     }
 
