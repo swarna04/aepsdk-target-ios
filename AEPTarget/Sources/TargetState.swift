@@ -33,17 +33,6 @@ class TargetState {
         }
     }
 
-#if DEBUG
-    var storedSessionId: String {
-        didSet {
-            if storedSessionId.isEmpty {
-                dataStore.remove(key: TargetConstants.DataStoreKeys.SESSION_ID)
-            } else {
-                dataStore.set(key: TargetConstants.DataStoreKeys.SESSION_ID, value: storedSessionId)
-            }
-        }
-    }
-#else
     private(set) var storedSessionId: String {
         didSet {
             if storedSessionId.isEmpty {
@@ -53,7 +42,6 @@ class TargetState {
             }
         }
     }
-#endif
 
     private let LOADED_MBOX_ACCEPTED_KEYS = [TargetConstants.TargetJson.Mbox.NAME, TargetConstants.TargetJson.METRICS]
 
@@ -154,9 +142,11 @@ class TargetState {
         sessionTimestampInSeconds = Date().getUnixTimeInSeconds()
     }
 
-    /// Remove storedSessionId and remove the key from datastore
-    func resetSessionId() {
-        storedSessionId = ""
+    /// Updates stored sessionId with the provided value.
+    ///
+    /// - Parameter sessionId: string containing the new sessionId to be set
+    func updateSessionId(_ sessionId: String) {
+        storedSessionId = sessionId
     }
 
     /// Updates the TNT ID in memory and in the data store
