@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *lblThirdParty;
 @property (weak, nonatomic) IBOutlet UILabel *lblTntId;
 @property (weak, nonatomic) IBOutlet UITextField *textThirdPartyID;
+@property (weak, nonatomic) IBOutlet UITextField *textTntID;
 @property (weak, nonatomic) IBOutlet UITextField *griffonUrl;
 
 @end
@@ -111,7 +112,13 @@
     }];
 }
 
-- (IBAction)getTntIDClicked:(id)sender {
+- (IBAction)setThirdPartyClicked:(id)sender {
+    if(![_textThirdPartyID.text isEqualToString:@""]) {
+        [AEPMobileTarget setThirdPartyId:_textThirdPartyID.text];
+    }
+}
+
+- (IBAction)getTntIdClicked:(id)sender {
     [AEPMobileTarget getTntId:^(NSString *tntID, NSError *error){
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.lblTntId setText:tntID];
@@ -119,9 +126,9 @@
     }];
 }
 
-- (IBAction)setThirdPartyClicked:(id)sender {
-    if(![_textThirdPartyID.text isEqualToString:@""]) {
-        [AEPMobileTarget setThirdPartyId:_textThirdPartyID.text];
+- (IBAction)setTntIdClicked:(id)sender {
+    if(![_textTntID.text isEqualToString:@""]) {
+        [AEPMobileTarget setTntId:_textTntID.text];
     }
 }
 

@@ -226,9 +226,12 @@ import Foundation
         }
     }
 
-    /// Sets the Test and Target user identifier.
+    /// Sets the Target user identifier.
+    ///
     /// The provided Tnt Id is persisted in the SDK and attached to all subsequent Target requests. It is used to
     /// derive the edge host value in the SDK, which is also persisted and used in future Target requests.
+    ///
+    /// If the provided Tnt Id is nil or empty, the SDK will remove the Tnt Id and edge host values from persistence.
     ///
     /// This ID is preserved between app upgrades, is saved and restored during the standard application backup process,
     /// and is removed at uninstall, upon privacy status update to opt out or when AEPTarget.resetExperience is called.
@@ -240,7 +243,7 @@ import Foundation
         MobileCore.dispatch(event: event)
     }
 
-    /// Gets the Test and Target user identifier.
+    /// Gets the Target user identifier.
     /// Retrieves the TnT ID returned by the Target server for this visitor. The TnT ID is set to the
     /// Mobile SDK after a successful call to prefetch content or load requests.
     ///
@@ -325,7 +328,7 @@ import Foundation
     /// location before, indicating that the mbox was viewed. This request helps Target record the clicked event for the given location or mbox.
     ///
     /// - Parameters:
-    ///   - mboxName:  String value representing the name for location/mbox
+    ///   - name:  String value representing the name for location/mbox
     ///   - targetParameters:  a TargetParameters object containing parameters for the location clicked
     @objc(clickedLocation:withTargetParameters:)
     static func clickedLocation(_ name: String, targetParameters: TargetParameters? = nil) {

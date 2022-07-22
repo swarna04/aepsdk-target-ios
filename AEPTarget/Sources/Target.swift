@@ -765,7 +765,7 @@ public class Target: NSObject, Extension {
         }
 
         if tntId == targetState.tntId {
-            Log.debug(label: Target.LOG_TAG, "setTntIdInternal - New tntId value is same as the existing tntId \(String(describing: tntId)).")
+            Log.debug(label: Target.LOG_TAG, "setTntIdInternal - Won't update Target tntId as provided value is same as the existing tntId value \(String(describing: tntId)).")
             return
         }
 
@@ -782,6 +782,7 @@ public class Target: NSObject, Extension {
             targetState.updateEdgeHost(nil)
         }
 
+        Log.trace(label: Target.LOG_TAG, "setTntIdInternal - Updating tntId with value \(String(describing: tntId)).")
         targetState.updateTntId(tntId)
     }
 
