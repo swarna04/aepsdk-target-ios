@@ -717,7 +717,7 @@ public class Target: NSObject, Extension {
     /// - Parameters:
     ///     - sessionId: new session Id that needs to be set in the SDK
     private func setSessionId(sessionId: String) {
-        if targetState.privacyStatusIsOptOut {
+        guard !targetState.privacyStatusIsOptOut else {
             Log.debug(label: Target.LOG_TAG, "setSessionId - Cannot update Target sessionId due to opt out privacy status.")
             return
         }

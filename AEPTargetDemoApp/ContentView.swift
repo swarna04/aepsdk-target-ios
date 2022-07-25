@@ -65,7 +65,6 @@ struct ContentView: View {
                     }.padding(10)
 
                     TextField("Please enter Session Id", text: $updatedsessionId).multilineTextAlignment(.center)
-
                     Button("Set Session Id") {
                         setSessionId()
                     }.padding(10)
@@ -76,7 +75,6 @@ struct ContentView: View {
                     }.padding(10)
                     
                     TextField("Please enter thirdPartyId", text: $updatedThirdPartyId).multilineTextAlignment(.center)
-
                     Button("Set Third Party Id") {
                         setThirdPartyId()
                     }.padding(10)
@@ -88,7 +86,6 @@ struct ContentView: View {
                     }.padding(10)
                     
                     TextField("Please enter tntId", text: $updatedTntId).multilineTextAlignment(.center)
-
                     Button("Set Tnt Id") {
                         setTntId()
                     }.padding(10)
