@@ -163,19 +163,19 @@ import Foundation
             guard let responseEvent = responseEvent else {
                 let error = "Request to get third party id failed, \(TargetError.ERROR_TIMEOUT)"
                 completion(nil, TargetError(message: error))
-                Log.error(label: Target.LOG_TAG, error)
+                Log.warning(label: Target.LOG_TAG, error)
                 return
             }
             guard let eventData = responseEvent.data else {
                 let error = "Unable to handle response, event data is nil."
                 completion(nil, TargetError(message: error))
-                Log.error(label: Target.LOG_TAG, error)
+                Log.warning(label: Target.LOG_TAG, error)
                 return
             }
             guard let thirdPartyId = eventData[TargetConstants.EventDataKeys.THIRD_PARTY_ID] as? String else {
                 let error = "Unable to handle response, No third party id available."
                 completion(nil, TargetError(message: error))
-                Log.error(label: Target.LOG_TAG, error)
+                Log.warning(label: Target.LOG_TAG, error)
                 return
             }
             completion(thirdPartyId, nil)
@@ -209,19 +209,19 @@ import Foundation
             guard let responseEvent = responseEvent else {
                 let error = "Request to get Target session Id failed with error, \(TargetError.ERROR_TIMEOUT)"
                 completion(nil, TargetError(message: error))
-                Log.error(label: Target.LOG_TAG, error)
+                Log.warning(label: Target.LOG_TAG, error)
                 return
             }
             guard let eventData = responseEvent.data else {
                 let error = "Unable to handle response for session Id get request, event data is nil."
                 completion(nil, TargetError(message: error))
-                Log.error(label: Target.LOG_TAG, error)
+                Log.warning(label: Target.LOG_TAG, error)
                 return
             }
             guard let sessionId = eventData[TargetConstants.EventDataKeys.TARGET_SESSION_ID] as? String else {
                 let error = "Unable to handle response for session Id get request, sessionId is not available."
                 completion(nil, TargetError(message: error))
-                Log.error(label: Target.LOG_TAG, error)
+                Log.warning(label: Target.LOG_TAG, error)
                 return
             }
             completion(sessionId, nil)
@@ -242,19 +242,19 @@ import Foundation
             guard let responseEvent = responseEvent else {
                 let error = "Request to get third party id failed, \(TargetError.ERROR_TIMEOUT)"
                 completion(nil, TargetError(message: error))
-                Log.error(label: Target.LOG_TAG, error)
+                Log.warning(label: Target.LOG_TAG, error)
                 return
             }
             guard let eventData = responseEvent.data else {
                 let error = "Unable to handle response, event data is nil."
                 completion(nil, TargetError(message: error))
-                Log.error(label: Target.LOG_TAG, error)
+                Log.warning(label: Target.LOG_TAG, error)
                 return
             }
             guard let tntId = eventData[TargetConstants.EventDataKeys.TNT_ID] as? String else {
                 let error = "Unable to handle response, No tntid available."
                 completion(nil, TargetError(message: error))
-                Log.error(label: Target.LOG_TAG, error)
+                Log.warning(label: Target.LOG_TAG, error)
                 return
             }
             completion(tntId, nil)
