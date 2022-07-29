@@ -213,13 +213,13 @@ import Foundation
                 return
             }
             guard let eventData = responseEvent.data else {
-                let error = "Unable to handle response for session ID get request, event data is nil."
+                let error = "Unable to handle response, event data is nil."
                 completion(nil, TargetError(message: error))
                 Log.warning(label: Target.LOG_TAG, error)
                 return
             }
             guard let sessionId = eventData[TargetConstants.EventDataKeys.TARGET_SESSION_ID] as? String else {
-                let error = "Unable to handle response for session ID get request, sessionId is not available."
+                let error = "Unable to handle response, session ID is not available."
                 completion(nil, TargetError(message: error))
                 Log.warning(label: Target.LOG_TAG, error)
                 return
