@@ -508,7 +508,7 @@ static func getTntId(_ completion: @escaping (String?, Error?) -> Void)
 
 This API sets the Target session identifier.
 
-The provided session Id is persisted in the SDK for a period defined by `target.sessionTimeout` configuration setting. If the provided sessionId is nil or empty, or if the privacy status is opted out, the SDK will remove the session Id value from the persistence.
+The provided session Id is persisted in the SDK for a period defined by `target.sessionTimeout` configuration setting. If the provided session Id is nil or empty, or if the privacy status is opted out, the SDK will remove the session Id value from the persistence.
 
     This ID is preserved between app upgrades, is saved and restored during the standard application backup process, and is removed at uninstall, upon privacy status update to opted out, or when the resetExperience API is used.
 
