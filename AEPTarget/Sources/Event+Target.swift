@@ -24,6 +24,11 @@ extension Event {
         return TargetParameters.from(dictionary: data?[TargetConstants.EventDataKeys.TARGET_PARAMETERS] as? [String: Any])
     }
 
+    /// Reads the Target `at_property` from the event data
+    var propertyToken: String {
+        return data?[TargetConstants.EventDataKeys.AT_PROPERTY] as? String ?? ""
+    }
+
     /// Returns true if this event is a prefetch request event
     var isPrefetchEvent: Bool {
         return data?[TargetConstants.EventDataKeys.PREFETCH_REQUESTS] != nil
