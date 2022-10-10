@@ -45,6 +45,18 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
                     "analytics" : {
                         "payload" : {"pe" : "tnt", "tnta" : "33333:1:0|12121|1,38711:1:0|1|1"}
                     }
+                  },
+                  {
+                    "index": 1,
+                    "name": "t_test_02",
+                    "options": [
+                      {
+                        "content": {
+                          "key2": "value2"
+                        },
+                        "type": "json"
+                      }
+                    ]
                   }
                 ]
               }
@@ -52,10 +64,11 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         """
 
         let data: [String: Any] = [
-            "request": [
-                [
-                    "name": "t_test_01",
-                    "targetParameters": [
+            "execute": [
+                "mboxes": [
+                    [
+                        "index": 0,
+                        "name": "t_test_01",
                         "parameters": [
                             "mbox-parameter-key1": "mbox-parameter-value1"
                         ],
@@ -63,43 +76,32 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
                             "subscription": "premium"
                         ],
                         "order": [
-                            "orderId": "id1",
+                            "id": "id1",
                             "total": 100.34,
                             "purchasedProductIds":[
                                 "pId1"
                             ]
                         ],
                         "product": [
-                            "productId": "pId1",
+                            "id": "pId1",
                             "categoryId": "cId1"
                         ]
                     ],
-                    "defaultContent": "",
-                    "responsePairId": ""
-                    
-                ],
-                [
-                    "name": "t_test_02",
-                    "targetParameters": [
+                    [
+                        "index": 1,
+                        "name": "t_test_02",
                         "parameters": [
                             "mbox-parameter-key2": "mbox-parameter-value2"
                         ],
                         "profileParameters": [
                             "subscription": "basic"
                         ]
-                    ],
-                    "defaultContent": "",
-                    "responsePairId": ""
+                    ]
                 ]
             ],
-            "israwevent": true,
-            "targetparams": [
-                "parameters": [
-                    "mbox-parameter-key3": "mbox-parameter-value3"
-                ]
-            ]
+            "israwevent": true
         ]
-        let executeRawRequestEvent = Event(name: "TargetRawExecuteRequest", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let executeRawRequestEvent = Event(name: "TargetRawRequest", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
 
         // creates a configuration shared state
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: executeRawRequestEvent, data: (value: mockConfigSharedState, status: .set))
@@ -113,7 +115,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         // registers the event listeners for Target extension
         target.onRegistered()
 
-        let targetRequestExpectation = XCTestExpectation(description: "Target raw execute request expectation")
+        let targetRequestExpectation = XCTestExpectation(description: "Target raw request expectation")
         
         // override network service
         let mockNetworkService = TestableNetworkService()
@@ -190,15 +192,14 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             XCTAssertEqual(executeJson["mboxes"][0]["name"].stringValue, "t_test_01")
             XCTAssertEqual(1, executeJson["mboxes"][0]["profileParameters"].count)
             XCTAssertEqual(executeJson["mboxes"][0]["profileParameters"]["subscription"].stringValue, "premium")
-            XCTAssertEqual(8, executeJson["mboxes"][0]["parameters"].count)
-            XCTAssertNotNil(executeJson["mboxes"][0]["parameters"]["a.Resolution"].stringValue)
-            XCTAssertNotNil(executeJson["mboxes"][0]["parameters"]["a.DeviceName"].stringValue)
-            XCTAssertNotNil(executeJson["mboxes"][0]["parameters"]["a.RunMode"].stringValue)
-            XCTAssertNotNil(executeJson["mboxes"][0]["parameters"]["a.locale"].stringValue)
-            XCTAssertNotNil(executeJson["mboxes"][0]["parameters"]["a.OSVersion"].stringValue)
-            XCTAssertNotNil(executeJson["mboxes"][0]["parameters"]["a.AppID"].stringValue)
+            XCTAssertEqual(1, executeJson["mboxes"][0]["parameters"].count)
+//            XCTAssertNotNil(executeJson["mboxes"][0]["parameters"]["a.Resolution"].stringValue)
+//            XCTAssertNotNil(executeJson["mboxes"][0]["parameters"]["a.DeviceName"].stringValue)
+//            XCTAssertNotNil(executeJson["mboxes"][0]["parameters"]["a.RunMode"].stringValue)
+//            XCTAssertNotNil(executeJson["mboxes"][0]["parameters"]["a.locale"].stringValue)
+//            XCTAssertNotNil(executeJson["mboxes"][0]["parameters"]["a.OSVersion"].stringValue)
+//            XCTAssertNotNil(executeJson["mboxes"][0]["parameters"]["a.AppID"].stringValue)
             XCTAssertEqual(executeJson["mboxes"][0]["parameters"]["mbox-parameter-key1"].stringValue, "mbox-parameter-value1")
-            XCTAssertEqual(executeJson["mboxes"][0]["parameters"]["mbox-parameter-key3"].stringValue, "mbox-parameter-value3")
             XCTAssertEqual(3, executeJson["mboxes"][0]["order"].count)
             XCTAssertEqual(executeJson["mboxes"][0]["order"]["id"].stringValue, "id1")
             XCTAssertEqual(executeJson["mboxes"][0]["order"]["total"].doubleValue, 100.34)
@@ -211,15 +212,14 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             XCTAssertEqual(executeJson["mboxes"][1]["name"].stringValue, "t_test_02")
             XCTAssertEqual(1, executeJson["mboxes"][1]["profileParameters"].count)
             XCTAssertEqual(executeJson["mboxes"][1]["profileParameters"]["subscription"].stringValue, "basic")
-            XCTAssertEqual(8, executeJson["mboxes"][1]["parameters"].count)
-            XCTAssertNotNil(executeJson["mboxes"][1]["parameters"]["a.Resolution"].stringValue)
-            XCTAssertNotNil(executeJson["mboxes"][1]["parameters"]["a.DeviceName"].stringValue)
-            XCTAssertNotNil(executeJson["mboxes"][1]["parameters"]["a.RunMode"].stringValue)
-            XCTAssertNotNil(executeJson["mboxes"][1]["parameters"]["a.locale"].stringValue)
-            XCTAssertNotNil(executeJson["mboxes"][1]["parameters"]["a.OSVersion"].stringValue)
-            XCTAssertNotNil(executeJson["mboxes"][1]["parameters"]["a.AppID"].stringValue)
+            XCTAssertEqual(1, executeJson["mboxes"][1]["parameters"].count)
+//            XCTAssertNotNil(executeJson["mboxes"][1]["parameters"]["a.Resolution"].stringValue)
+//            XCTAssertNotNil(executeJson["mboxes"][1]["parameters"]["a.DeviceName"].stringValue)
+//            XCTAssertNotNil(executeJson["mboxes"][1]["parameters"]["a.RunMode"].stringValue)
+//            XCTAssertNotNil(executeJson["mboxes"][1]["parameters"]["a.locale"].stringValue)
+//            XCTAssertNotNil(executeJson["mboxes"][1]["parameters"]["a.OSVersion"].stringValue)
+//            XCTAssertNotNil(executeJson["mboxes"][1]["parameters"]["a.AppID"].stringValue)
             XCTAssertEqual(executeJson["mboxes"][1]["parameters"]["mbox-parameter-key2"].stringValue, "mbox-parameter-value2")
-            XCTAssertEqual(executeJson["mboxes"][1]["parameters"]["mbox-parameter-key3"].stringValue, "mbox-parameter-value3")
             
             targetRequestExpectation.fulfill()
             let validResponse = HTTPURLResponse(url: URL(string: "https://acopprod3.tt.omtrdc.net/rest/v1/delivery")!, statusCode: 200, httpVersion: nil, headerFields: nil)
@@ -279,29 +279,24 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         """
 
         let data: [String: Any] = [
-            "request": [
-                [
-                    "name": "t_test_01",
-                    "targetParameters": [
+            "execute": [
+                "mboxes": [
+                    [
+                        "index": 0,
+                        "name": "t_test_01",
                         "parameters": [
                             "mbox-parameter-key1": "mbox-parameter-value1"
                         ]
-                    ],
-                    "defaultContent": "",
-                    "responsePairId": ""
-                    
+                    ]
                 ]
             ],
             "israwevent": true,
-            "targetparams": [
-                "parameters": [
-                    "mbox-parameter-key3": "mbox-parameter-value3"
-                ]
-            ],
-            "at_property": "a2ec61d0-fab8-42f9-bf0f-699d169b48d8"
+            "property": [
+                "token": "a2ec61d0-fab8-42f9-bf0f-699d169b48d8"
+            ]
         ]
         
-        let executeRawRequestEvent = Event(name: "TargetRawExecuteRequest", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let executeRawRequestEvent = Event(name: "TargetRawRequest", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
 
         // creates a configuration shared state
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: executeRawRequestEvent, data: (value: mockConfigSharedState, status: .set))
@@ -312,7 +307,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         // registers the event listeners for Target extension
         target.onRegistered()
 
-        let targetRequestExpectation = XCTestExpectation(description: "Target raw execute request expectation")
+        let targetRequestExpectation = XCTestExpectation(description: "Target raw request expectation")
         
         // override network service
         let mockNetworkService = TestableNetworkService()
@@ -387,9 +382,8 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             let executeJson = JSON(parseJSON: self.prettify(executeDictionary))
             XCTAssertEqual(executeJson["mboxes"][0]["index"].intValue, 0)
             XCTAssertEqual(executeJson["mboxes"][0]["name"].stringValue, "t_test_01")
-            XCTAssertEqual(2, executeJson["mboxes"][0]["parameters"].count)
+            XCTAssertEqual(1, executeJson["mboxes"][0]["parameters"].count)
             XCTAssertEqual(executeJson["mboxes"][0]["parameters"]["mbox-parameter-key1"].stringValue, "mbox-parameter-value1")
-            XCTAssertEqual(executeJson["mboxes"][0]["parameters"]["mbox-parameter-key3"].stringValue, "mbox-parameter-value3")
             
             targetRequestExpectation.fulfill()
             let validResponse = HTTPURLResponse(url: URL(string: "https://acopprod3.tt.omtrdc.net/rest/v1/delivery")!, statusCode: 200, httpVersion: nil, headerFields: nil)
@@ -447,29 +441,24 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         """
 
         let data: [String: Any] = [
-            "request": [
-                [
-                    "name": "t_test_01",
-                    "targetParameters": [
+            "execute": [
+                "mboxes": [
+                    [
+                        "index": 0,
+                        "name": "t_test_01",
                         "parameters": [
                             "mbox-parameter-key1": "mbox-parameter-value1"
                         ]
-                    ],
-                    "defaultContent": "",
-                    "responsePairId": ""
-                    
+                    ]
                 ]
             ],
             "israwevent": true,
-            "targetparams": [
-                "parameters": [
-                    "mbox-parameter-key3": "mbox-parameter-value3"
-                ]
-            ],
-            "at_property": "a2ec61d0-fab8-42f9-bf0f-699d169b48d8"
+            "property": [
+                "token": "a2ec61d0-fab8-42f9-bf0f-699d169b48d8"
+            ]
         ]
         
-        let executeRawRequestEvent = Event(name: "TargetRawExecuteRequest", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let executeRawRequestEvent = Event(name: "TargetRawRequest", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
 
         // creates a configuration shared state
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: executeRawRequestEvent, data: (value: mockConfigSharedState, status: .set))
@@ -480,7 +469,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         // registers the event listeners for Target extension
         target.onRegistered()
 
-        let targetRequestExpectation = XCTestExpectation(description: "Target raw execute request expectation")
+        let targetRequestExpectation = XCTestExpectation(description: "Target raw request expectation")
         
         // override network service
         let mockNetworkService = TestableNetworkService()
@@ -555,9 +544,8 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             let executeJson = JSON(parseJSON: self.prettify(executeDictionary))
             XCTAssertEqual(executeJson["mboxes"][0]["index"].intValue, 0)
             XCTAssertEqual(executeJson["mboxes"][0]["name"].stringValue, "t_test_01")
-            XCTAssertEqual(2, executeJson["mboxes"][0]["parameters"].count)
+            XCTAssertEqual(1, executeJson["mboxes"][0]["parameters"].count)
             XCTAssertEqual(executeJson["mboxes"][0]["parameters"]["mbox-parameter-key1"].stringValue, "mbox-parameter-value1")
-            XCTAssertEqual(executeJson["mboxes"][0]["parameters"]["mbox-parameter-key3"].stringValue, "mbox-parameter-value3")
             
             targetRequestExpectation.fulfill()
             let validResponse = HTTPURLResponse(url: URL(string: "https://acopprod3.tt.omtrdc.net/rest/v1/delivery")!, statusCode: 200, httpVersion: nil, headerFields: nil)
@@ -583,23 +571,21 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         XCTAssertEqual("DE03D4AD-1FFE-421F-B2F2-303BF26822C1.35_0", mockRuntime.createdSharedStates[0]?["tntid"] as? String)
     }
 
-    func testExecuteRawRequest_emptyRequestsArray() {
+    func testExecuteRawRequest_noPrefetchOrExecuteRequestsInDictionary() {
         MockNetworkService.request = nil
         ServiceProvider.shared.networkService = MockNetworkService()
     
         let data: [String: Any] = [
-            "request": [],
-            "israwevent": true,
+            "israwevent": true
         ]
-        let executeRawRequestEvent = Event(name: "TargetRawExecuteRequest", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let executeRawRequestEvent = Event(name: "TargetRawRequest", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
         
         // creates a configuration shared state
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: executeRawRequestEvent, data: (value: mockConfigSharedState, status: .set))
         
         target.onRegistered()
         
-        let targetRequestExpectation = XCTestExpectation(description: "Target raw execute request expectation")
-        targetRequestExpectation.isInverted = true
+        let targetRequestExpectation = XCTestExpectation(description: "Target raw request expectation")
         
         let mockNetworkService = TestableNetworkService()
         ServiceProvider.shared.networkService = mockNetworkService
@@ -623,37 +609,31 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
     }
 
     func testExecuteRawRequest_errorResponse() {
-        target.targetState.addNotification(Notification(id: UUID().uuidString, timestamp: Int64(Date().timeIntervalSince1970 * 1000.0), type: "click", mbox: Mbox(name: "t_test_02"), tokens: ["LgG0+YDMHn4X5HqGJVoZ5g=="], parameters: nil, profileParameters: nil, order: nil, product: nil))
-        
         // mocked network response
         let responseString = """
             {
-              "message": "error_message Notifications"
+              "message": "error_message"
             }
         """
 
         let data: [String: Any] = [
-            "request": [
-                [
-                    "name": "t_test_01",
-                    "targetParameters": [
+            "execute": [
+                "mboxes": [
+                    [
+                        "index": 0,
+                        "name": "t_test_01",
                         "parameters": [
                             "mbox-parameter-key1": "mbox-parameter-value1"
                         ]
-                    ],
-                    "defaultContent": "",
-                    "responsePairId": ""
+                    ]
                 ]
             ],
             "israwevent": true
         ]
-        let executeRawRequestEvent = Event(name: "TargetRawExecuteRequest", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let executeRawRequestEvent = Event(name: "TargetRawRequest", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
 
         // creates a configuration shared state
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: executeRawRequestEvent, data: (value: mockConfigSharedState, status: .set))
-
-        // creates a lifecycle shared state
-        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.lifecycle", event: executeRawRequestEvent, data: (value: mockLifecycleData, status: .set))
 
         // creates an identity shared state
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.identity", event: executeRawRequestEvent, data: (value: mockIdentityData, status: .set))
@@ -661,7 +641,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         // registers the event listeners for Target extension
         target.onRegistered()
         
-        let targetRequestExpectation = XCTestExpectation(description: "Target raw execute request expectation")
+        let targetRequestExpectation = XCTestExpectation(description: "Target raw request expectation")
         // override network service
         let mockNetworkService = TestableNetworkService()
         ServiceProvider.shared.networkService = mockNetworkService
@@ -691,7 +671,15 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         // Check the notifications are cleared
         XCTAssertTrue(target.targetState.notifications.isEmpty)
         XCTAssertEqual(0, target.targetState.loadedMboxJsonDicts.count)
+        
+        XCTAssertEqual(1, mockRuntime.dispatchedEvents.count)
+        XCTAssertEqual("com.adobe.eventSource.responseContent", mockRuntime.dispatchedEvents[0].source)
+        XCTAssertEqual("com.adobe.eventType.target", mockRuntime.dispatchedEvents[0].type)
+        let eventData = mockRuntime.dispatchedEvents[0].data
+        XCTAssertEqual("error_message", eventData?["responseerror"] as? String)
+        XCTAssertNil(eventData?["responsedata"])
     }
+    
 
     func testExecuteRawRequest_emptyExecuteMboxesResponse() {
         let responseString = """
@@ -711,21 +699,20 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         """
 
         let data: [String: Any] = [
-            "request": [
-                [
-                    "name": "t_test_01",
-                    "targetParameters": [
+            "execute": [
+                "mboxes": [
+                    [
+                        "index": 0,
+                        "name": "t_test_01",
                         "parameters": [
                             "mbox-parameter-key1": "mbox-parameter-value1"
                         ]
-                    ],
-                    "defaultContent": "",
-                    "responsePairId": ""
+                    ]
                 ]
             ],
             "israwevent": true
         ]
-        let executeRawRequestEvent = Event(name: "TargetRawExecuteRequest", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let executeRawRequestEvent = Event(name: "TargetRawRequest", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
 
         // creates a configuration shared state
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: executeRawRequestEvent, data: (value: mockConfigSharedState, status: .set))
@@ -733,7 +720,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         // registers the event listeners for Target extension
         target.onRegistered()
 
-        let targetRequestExpectation = XCTestExpectation(description: "Target raw execute request expectation")
+        let targetRequestExpectation = XCTestExpectation(description: "Target raw request expectation")
         
         // override network service
         let mockNetworkService = TestableNetworkService()
@@ -767,8 +754,10 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         // verifies the content of network response was stored correctly
         XCTAssertEqual(1, mockRuntime.dispatchedEvents.count)
         XCTAssertNotNil(mockRuntime.dispatchedEvents[0].data)
-        let responseData = mockRuntime.dispatchedEvents[0].data?["executemboxes"] as? [[String: Any]]
-        XCTAssertEqual(true, responseData?.isEmpty)
+        let responseData = mockRuntime.dispatchedEvents[0].data?["responsedata"] as? [String: Any]
+        let execute = responseData?["execute"] as? [String: Any]
+        let mboxes = execute?["mboxes"] as? [[String: Any]]
+        XCTAssertEqual(true, mboxes?.isEmpty)
     }
     
     func testSendRawNotification() {
@@ -791,33 +780,34 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
 
         // Build the location data
         let data: [String: Any] = [
-            "notification": [
-                "name": "t_test_01",
-                "tokens": ["QPaLjCeI9qKCBUylkRQKBg=="],
-                "parameters": [
-                    "mbox-parameter-key1": "mbox-parameter-value1"
-                ],
-                "profileParameters": [
-                    "subscription": "premium"
-                ],
-                "order": [
-                    "orderId": "id1",
-                    "total": 100.34,
-                    "purchasedProductIds":[
-                        "pId1"
+            "notifications": [
+                [
+                    "id": "0",
+                    "mbox": [
+                        "name": "t_test_01"
+                    ],
+                    "type": "click",
+                    "timestamp": Int64(Date().timeIntervalSince1970 * 1000.0),
+                    "tokens": ["QPaLjCeI9qKCBUylkRQKBg=="],
+                    "parameters": [
+                        "mbox-parameter-key1": "mbox-parameter-value1"
+                    ],
+                    "profileParameters": [
+                        "subscription": "premium"
+                    ],
+                    "order": [
+                        "id": "id1",
+                        "total": 100.34,
+                        "purchasedProductIds":[
+                            "pId1"
+                        ]
+                    ],
+                    "product": [
+                        "id": "pId1",
+                        "categoryId": "cId1"
                     ]
-                ],
-                "product": [
-                    "productId": "pId1",
-                    "categoryId": "cId1"
                 ]
             ],
-            "targetparams": [
-                "parameters": [
-                    "mbox-parameter-key3": "mbox-parameter-value3"
-                ]
-            ],
-            "islocationclicked": true,
             "israwevent": true
         ]
         
@@ -909,15 +899,14 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             XCTAssertEqual(1, notificationsJson[0]["tokens"].count)
             XCTAssertEqual("QPaLjCeI9qKCBUylkRQKBg==", notificationsJson[0]["tokens"][0])
             XCTAssertEqual("click", notificationsJson[0]["type"])
-            XCTAssertEqual(8, notificationsJson[0]["parameters"].count)
-            XCTAssertNotNil(notificationsJson[0]["parameters"]["a.Resolution"].stringValue)
-            XCTAssertNotNil(notificationsJson[0]["parameters"]["a.DeviceName"].stringValue)
-            XCTAssertNotNil(notificationsJson[0]["parameters"]["a.RunMode"].stringValue)
-            XCTAssertNotNil(notificationsJson[0]["parameters"]["a.locale"].stringValue)
-            XCTAssertNotNil(notificationsJson[0]["parameters"]["a.OSVersion"].stringValue)
-            XCTAssertNotNil(notificationsJson[0]["parameters"]["a.AppID"].stringValue)
+            XCTAssertEqual(1, notificationsJson[0]["parameters"].count)
+//            XCTAssertNotNil(notificationsJson[0]["parameters"]["a.Resolution"].stringValue)
+//            XCTAssertNotNil(notificationsJson[0]["parameters"]["a.DeviceName"].stringValue)
+//            XCTAssertNotNil(notificationsJson[0]["parameters"]["a.RunMode"].stringValue)
+//            XCTAssertNotNil(notificationsJson[0]["parameters"]["a.locale"].stringValue)
+//            XCTAssertNotNil(notificationsJson[0]["parameters"]["a.OSVersion"].stringValue)
+//            XCTAssertNotNil(notificationsJson[0]["parameters"]["a.AppID"].stringValue)
             XCTAssertEqual("mbox-parameter-value1", notificationsJson[0]["parameters"]["mbox-parameter-key1"].stringValue)
-            XCTAssertEqual("mbox-parameter-value3", notificationsJson[0]["parameters"]["mbox-parameter-key3"].stringValue)
             XCTAssertEqual(1, notificationsJson[0]["profileParameters"].count)
             XCTAssertEqual("premium", notificationsJson[0]["profileParameters"]["subscription"])
             XCTAssertEqual(3, notificationsJson[0]["order"].count)
@@ -978,20 +967,23 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
 
         // Build the location data
         let data: [String: Any] = [
-            "notification": [
-                "name": "t_test_01",
-                "tokens": ["QPaLjCeI9qKCBUylkRQKBg=="],
-                "parameters": [
-                    "mbox-parameter-key1": "mbox-parameter-value1"
+            "notifications": [
+                [
+                    "id": "0",
+                    "mbox": [
+                        "name": "t_test_01"
+                    ],
+                    "type": "click",
+                    "timestamp": Int64(Date().timeIntervalSince1970 * 1000.0),
+                    "tokens": ["QPaLjCeI9qKCBUylkRQKBg=="],
+                    "parameters": [
+                        "mbox-parameter-key1": "mbox-parameter-value1"
+                    ]
                 ]
             ],
-            "targetparams": [
-                "parameters": [
-                    "mbox-parameter-key3": "mbox-parameter-value3"
-                ]
+            "property":[
+                "token": "a2ec61d0-fab8-42f9-bf0f-699d169b48d8"
             ],
-            "at_property": "a2ec61d0-fab8-42f9-bf0f-699d169b48d8",
-            "islocationclicked": true,
             "israwevent": true
         ]
         
@@ -1079,9 +1071,8 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             XCTAssertEqual(1, notificationsJson[0]["tokens"].count)
             XCTAssertEqual("QPaLjCeI9qKCBUylkRQKBg==", notificationsJson[0]["tokens"][0])
             XCTAssertEqual("click", notificationsJson[0]["type"])
-            XCTAssertEqual(2, notificationsJson[0]["parameters"].count)
+            XCTAssertEqual(1, notificationsJson[0]["parameters"].count)
             XCTAssertEqual("mbox-parameter-value1", notificationsJson[0]["parameters"]["mbox-parameter-key1"].stringValue)
-            XCTAssertEqual("mbox-parameter-value3", notificationsJson[0]["parameters"]["mbox-parameter-key3"].stringValue)
             
             notificationExpectation.fulfill()
             let validResponse = HTTPURLResponse(url: URL(string: "https://acopprod3.tt.omtrdc.net/rest/v1/delivery")!, statusCode: 200, httpVersion: nil, headerFields: nil)
@@ -1130,19 +1121,23 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
 
         // Build the location data
         let data: [String: Any] = [
-            "notification": [
-                "name": "t_test_01",
-                "tokens": ["QPaLjCeI9qKCBUylkRQKBg=="],
-                "parameters": [
-                    "mbox-parameter-key1": "mbox-parameter-value1"
+            "notifications": [
+                [
+                    "id": "0",
+                    "mbox": [
+                        "name": "t_test_01"
+                    ],
+                    "type": "click",
+                    "timestamp": Int64(Date().timeIntervalSince1970 * 1000.0),
+                    "tokens": ["QPaLjCeI9qKCBUylkRQKBg=="],
+                    "parameters": [
+                        "mbox-parameter-key1": "mbox-parameter-value1"
+                    ]
                 ]
             ],
-            "targetparams": [
-                "parameters": [
-                    "mbox-parameter-key3": "mbox-parameter-value3"
-                ]
+            "property":[
+                "token": "a2ec61d0-fab8-42f9-bf0f-699d169b48d8"
             ],
-            "islocationclicked": true,
             "israwevent": true
         ]
         
@@ -1230,9 +1225,8 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             XCTAssertEqual(1, notificationsJson[0]["tokens"].count)
             XCTAssertEqual("QPaLjCeI9qKCBUylkRQKBg==", notificationsJson[0]["tokens"][0])
             XCTAssertEqual("click", notificationsJson[0]["type"])
-            XCTAssertEqual(2, notificationsJson[0]["parameters"].count)
+            XCTAssertEqual(1, notificationsJson[0]["parameters"].count)
             XCTAssertEqual("mbox-parameter-value1", notificationsJson[0]["parameters"]["mbox-parameter-key1"].stringValue)
-            XCTAssertEqual("mbox-parameter-value3", notificationsJson[0]["parameters"]["mbox-parameter-key3"].stringValue)
             
             notificationExpectation.fulfill()
             let validResponse = HTTPURLResponse(url: URL(string: "https://acopprod3.tt.omtrdc.net/rest/v1/delivery")!, statusCode: 200, httpVersion: nil, headerFields: nil)
@@ -1299,27 +1293,20 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         """
 
         let data: [String: Any] = [
-            "request": [
-                [
-                    "name": "t_test_01",
-                    "targetParameters": [
+            "execute": [
+                "mboxes": [
+                    [
+                        "index": 0,
+                        "name": "t_test_01",
                         "parameters": [
                             "mbox-parameter-key1": "mbox-parameter-value1"
                         ]
-                    ],
-                    "defaultContent": "",
-                    "responsePairId": ""
-                    
+                    ]
                 ]
             ],
-            "israwevent": true,
-            "targetparams": [
-                "parameters": [
-                    "mbox-parameter-key3": "mbox-parameter-value3"
-                ]
-            ]
+            "israwevent": true
         ]
-        let executeRawRequestEvent = Event(name: "TargetRawExecuteRequest", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let executeRawRequestEvent = Event(name: "TargetRawRequest", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
 
         // creates a configuration shared state
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: executeRawRequestEvent, data: (value: mockConfigSharedState, status: .set))
@@ -1330,7 +1317,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         // registers the event listeners for Target extension
         target.onRegistered()
 
-        let targetRequestExpectation = XCTestExpectation(description: "Target raw execute request expectation")
+        let targetRequestExpectation = XCTestExpectation(description: "Target raw request expectation")
         
         // override network service
         let mockNetworkService = TestableNetworkService()
@@ -1357,17 +1344,20 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         wait(for: [targetRequestExpectation], timeout: 2)
 
         XCTAssertEqual(1, mockRuntime.dispatchedEvents.count)
+        XCTAssertEqual("com.adobe.eventSource.responseContent", mockRuntime.dispatchedEvents[0].source)
+        XCTAssertEqual("com.adobe.eventType.target", mockRuntime.dispatchedEvents[0].type)
         guard
-            let data = mockRuntime.dispatchedEvents[0].data,
-            let executeMboxesArray = data["executemboxes"] as? [[String: Any]]
+            let responseData = mockRuntime.dispatchedEvents[0].data?["responsedata"] as? [String: Any],
+            let execute = responseData["execute"] as? [String: Any],
+            let executeMboxes = execute["mboxes"] as? [[String: Any]]
         else {
             XCTFail()
             return
         }
            
-        XCTAssertEqual(1, executeMboxesArray.count)
-        XCTAssertEqual("t_test_01", executeMboxesArray[0]["name"] as? String)
-        let metrics = executeMboxesArray[0]["metrics"] as? [[String: Any]]
+        XCTAssertEqual(1, executeMboxes.count)
+        XCTAssertEqual("t_test_01", executeMboxes[0]["name"] as? String)
+        let metrics = executeMboxes[0]["metrics"] as? [[String: Any]]
         XCTAssertEqual(1, metrics?.count)
         XCTAssertEqual("click", metrics?[0]["type"] as? String)
         let notificationToken = metrics?[0]["eventToken"] as? String
@@ -1392,21 +1382,23 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         
         // Build the notification data
         let notificationData: [String: Any] = [
-            "notification": [
-                "name": "t_test_01",
-                "tokens": [notificationToken],
-                "parameters": [
-                    "mbox-parameter-key2": "mbox-parameter-value2"
+            "notifications": [
+                [
+                    "id": "0",
+                    "mbox": [
+                        "name": "t_test_01"
+                    ],
+                    "type": "click",
+                    "timestamp": Int64(Date().timeIntervalSince1970 * 1000.0),
+                    "tokens": [notificationToken],
+                    "parameters": [
+                        "mbox-parameter-key2": "mbox-parameter-value2"
+                    ]
                 ]
             ],
-            "targetparams": [
-                "parameters": [
-                    "mbox-parameter-key4": "mbox-parameter-value4"
-                ]
-            ],
-            "islocationclicked": true,
             "israwevent": true
         ]
+
         let sendRawNotificationEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: notificationData)
         
         let notificationExpectation = XCTestExpectation(description: "Target raw notification expectation")
@@ -1437,9 +1429,8 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             XCTAssertEqual(1, notificationsJson[0]["tokens"].count)
             XCTAssertEqual("ABPi/uih7s0vo6/8kqyxjA==", notificationsJson[0]["tokens"][0])
             XCTAssertEqual("click", notificationsJson[0]["type"])
-            XCTAssertEqual(2, notificationsJson[0]["parameters"].count)
+            XCTAssertEqual(1, notificationsJson[0]["parameters"].count)
             XCTAssertEqual("mbox-parameter-value2", notificationsJson[0]["parameters"]["mbox-parameter-key2"].stringValue)
-            XCTAssertEqual("mbox-parameter-value4", notificationsJson[0]["parameters"]["mbox-parameter-key4"].stringValue)
             
             notificationExpectation.fulfill()
             
@@ -1463,18 +1454,11 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         XCTAssertEqual("DE03D4AD-1FFE-421F-B2F2-303BF26822C1.35_0", mockRuntime.createdSharedStates[0]?["tntid"] as? String)
     }
 
-    func testSendRawNotification_noNotificationMboxName() {
+    func testSendRawNotification_noNotificationsInDictionary() {
         MockNetworkService.request = nil
         ServiceProvider.shared.networkService = MockNetworkService()
         
         let data: [String: Any] = [
-            "notification": [
-                "tokens": ["QPaLjCeI9qKCBUylkRQKBg=="],
-                "parameters": [
-                    "mbox-parameter-key1": "mbox-parameter-value1"
-                ]
-            ],
-            "islocationclicked": true,
             "israwevent": true
         ]
         
@@ -1486,7 +1470,6 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         target.onRegistered()
 
         let notificationExpectation = XCTestExpectation(description: "Target raw notification expectation")
-        notificationExpectation.isInverted = true
         
         let mockNetworkService = TestableNetworkService()
         ServiceProvider.shared.networkService = mockNetworkService
@@ -1509,51 +1492,6 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         wait(for: [notificationExpectation], timeout: 1)
     }
 
-    func testSendRawNotification_noNotificationToken() {
-        // mocked network response
-        let data: [String: Any] = [
-            "notification": [
-                "name": "t_test_01",
-                "parameters": [
-                    "mbox-parameter-key1": "mbox-parameter-value1"
-                ]
-            ],
-            "islocationclicked": true,
-            "israwevent": true
-        ]
-        
-        let sendRawNotificationEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
-        
-        // creates a configuration shared state
-        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationEvent, data: (value: mockConfigSharedState, status: .set))
-
-        // registers the event listeners for Target extension
-        target.onRegistered()
-        
-        let notificationExpectation = XCTestExpectation(description: "Target raw notification expectation")
-        notificationExpectation.isInverted = true
-
-        // override network service
-        let mockNetworkService = TestableNetworkService()
-        ServiceProvider.shared.networkService = mockNetworkService
-        mockNetworkService.mock { request in
-            // verifies network request
-            if request.url.absoluteString.contains("https://acopprod3.tt.omtrdc.net/rest/v1/delivery/?client=acopprod3&sessionId=") {
-                notificationExpectation.fulfill()
-            }
-            return nil
-        }
-        guard let eventListener: EventListener = mockRuntime.listeners["com.adobe.eventType.target-com.adobe.eventSource.requestContent"] else {
-            XCTFail()
-            return
-        }
-        XCTAssertTrue(target.readyForEvent(sendRawNotificationEvent))
-        
-        // handles the send raw notification event
-        eventListener(sendRawNotificationEvent)
-        wait(for: [notificationExpectation], timeout: 1)
-    }
-    
     func testSendRawNotification_notificationErrorResponse() {
         // mocked network response
         let responseString = """
@@ -1564,14 +1502,20 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
 
         // Build the location data
         let data: [String: Any] = [
-            "notification": [
-                "name": "t_test_01",
-                "tokens": ["QPaLjCeI9qKCBUylkRQKBg=="],
-                "parameters": [
-                    "mbox-parameter-key1": "mbox-parameter-value1"
+            "notifications": [
+                [
+                    "id": "0",
+                    "mbox": [
+                        "name": "t_test_01"
+                    ],
+                    "type": "click",
+                    "timestamp": Int64(Date().timeIntervalSince1970 * 1000.0),
+                    "tokens": ["QPaLjCeI9qKCBUylkRQKBg=="],
+                    "parameters": [
+                        "mbox-parameter-key1": "mbox-parameter-value1"
+                    ]
                 ]
             ],
-            "islocationclicked": true,
             "israwevent": true
         ]
         
