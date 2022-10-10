@@ -839,7 +839,7 @@ public class Target: NSObject, Extension {
         var error: String?
 
         defer {
-            if error != nil && isContentRequest {
+            if error != nil, isContentRequest {
                 dispatchTargetRawResponse(event: event, error: error, data: nil)
             }
         }
@@ -918,7 +918,7 @@ public class Target: NSObject, Extension {
             self.targetState.updateSessionTimestamp()
             self.processTargetRawResponse(event: event, isContentRequest: isContentRequest, connection: connection)
         }
-        self.startEvents()
+        startEvents()
     }
 
     /// Processes the network response after the Target delivery API call for raw request.
