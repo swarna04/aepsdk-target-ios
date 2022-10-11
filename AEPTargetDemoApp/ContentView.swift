@@ -109,7 +109,7 @@ struct ContentView: View {
                         executeRawRequest()
                     }.padding(10)
 
-                    Button("Send Raw Notification") {
+                    Button("Send Raw Notifications") {
                         sendRawNotifications()
                     }.padding(10)
 
