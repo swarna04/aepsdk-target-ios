@@ -210,7 +210,7 @@
     }];
 }
 
-- (IBAction)sendRawNotification: (id)sender {
+- (IBAction)sendRawNotifications: (id)sender {
     NSMutableArray *notifications = [[NSMutableArray alloc] init];
     for (int i=0; i < [self.notificationTokens count]; i++) {
         NSDictionary* notification = @{
@@ -233,7 +233,7 @@
     NSDictionary *request = @{
         @"notifications": notifications
     };
-    [AEPMobileTarget sendRawNotification:request];
+    [AEPMobileTarget sendRawNotifications:request];
     [self.notificationTokens removeAllObjects];
 }
 @end

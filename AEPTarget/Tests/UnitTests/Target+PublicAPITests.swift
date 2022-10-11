@@ -806,7 +806,7 @@ class TargetPublicAPITests: XCTestCase {
         wait(for: [expectation], timeout: 2)
     }
 
-    func testSendRawNotification() throws {
+    func testSendRawNotifications() throws {
         let expectation = XCTestExpectation(description: "Should dispatch a target request content event for sending raw notification")
         expectation.assertForOverFulfill = true
         
@@ -854,11 +854,11 @@ class TargetPublicAPITests: XCTestCase {
         }
 
         
-        Target.sendRawNotification(requestData)
+        Target.sendRawNotifications(requestData)
         wait(for: [expectation], timeout: 2)
     }
     
-    func testSendRawNotification_withEmptyRequestDictionary() throws {
+    func testSendRawNotifications_withEmptyRequestDictionary() throws {
         let expectation = XCTestExpectation(description: "Should not dispatch a target request content event for sending raw notification")
         expectation.isInverted = true
         
@@ -867,12 +867,12 @@ class TargetPublicAPITests: XCTestCase {
             expectation.fulfill()
         }
 
-        Target.sendRawNotification([:])
+        Target.sendRawNotifications([:])
 
         wait(for: [expectation], timeout: 2)
     }
     
-    func testSendRawNotification_withNoNotificationsInRequestDictionary() throws {
+    func testSendRawNotifications_withNoNotificationsInRequestDictionary() throws {
         let expectation = XCTestExpectation(description: "Should not dispatch a target request content event for sending raw notification")
         expectation.isInverted = true
         
@@ -896,7 +896,7 @@ class TargetPublicAPITests: XCTestCase {
             expectation.fulfill()
         }
 
-        Target.sendRawNotification(requestData)
+        Target.sendRawNotifications(requestData)
 
         wait(for: [expectation], timeout: 2)
     }

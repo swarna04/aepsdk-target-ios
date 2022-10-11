@@ -110,7 +110,7 @@ struct ContentView: View {
                     }.padding(10)
 
                     Button("Send Raw Notification") {
-                        sendRawNotification()
+                        sendRawNotifications()
                     }.padding(10)
 
                 }
@@ -294,7 +294,7 @@ struct ContentView: View {
         }
     }
     
-    func sendRawNotification() {
+    func sendRawNotifications() {
         var notifications: [[String: Any]] = []
         var i: Int = 0
         for token in notificationTokens {
@@ -318,7 +318,7 @@ struct ContentView: View {
         guard !notifications.isEmpty else {
             return
         }
-        Target.sendRawNotification([
+        Target.sendRawNotifications([
             "notifications": notifications
         ])
         notificationTokens.removeAll()

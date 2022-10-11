@@ -1206,7 +1206,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         XCTAssertEqual("Privacy status is not opted in", mockRuntime.dispatchedEvents[0].data?["responseerror"] as? String)
     }
     
-    func testSendRawNotification() {
+    func testSendRawNotifications() {
         // mocked network response
         let responseString = """
             {
@@ -1257,16 +1257,16 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             "israwevent": true
         ]
         
-        let sendRawNotificationEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let sendRawNotificationsEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
         
         // creates a configuration shared state
-        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationEvent, data: (value: mockConfigSharedState, status: .set))
+        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationsEvent, data: (value: mockConfigSharedState, status: .set))
 
         // creates a lifecycle shared state
-        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.lifecycle", event: sendRawNotificationEvent, data: (value: mockLifecycleData, status: .set))
+        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.lifecycle", event: sendRawNotificationsEvent, data: (value: mockLifecycleData, status: .set))
 
         // creates an identity shared state
-        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.identity", event: sendRawNotificationEvent, data: (value: mockIdentityData, status: .set))
+        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.identity", event: sendRawNotificationsEvent, data: (value: mockIdentityData, status: .set))
 
         target.onRegistered()
 
@@ -1367,10 +1367,10 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             return
         }
 
-        XCTAssertTrue(target.readyForEvent(sendRawNotificationEvent))
+        XCTAssertTrue(target.readyForEvent(sendRawNotificationsEvent))
         
         // handles the send raw notification event
-        eventListener(sendRawNotificationEvent)
+        eventListener(sendRawNotificationsEvent)
         wait(for: [notificationExpectation], timeout: 2)
 
         // Check the notifications are cleared
@@ -1385,7 +1385,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         XCTAssertEqual("DE03D4AD-1FFE-421F-B2F2-303BF26822C1.35_0", mockRuntime.createdSharedStates[0]?["tntid"] as? String)
     }
 
-    func testSendRawNotification_withPropertyTokenInEventData() {
+    func testSendRawNotifications_withPropertyTokenInEventData() {
         mockConfigSharedState = ["target.clientCode": "acopprod3", "global.privacy": "optedin"]
         
         // mocked network response
@@ -1427,13 +1427,13 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             "israwevent": true
         ]
         
-        let sendRawNotificationEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let sendRawNotificationsEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
         
         // creates a configuration shared state
-        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationEvent, data: (value: mockConfigSharedState, status: .set))
+        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationsEvent, data: (value: mockConfigSharedState, status: .set))
 
         // creates an identity shared state
-        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.identity", event: sendRawNotificationEvent, data: (value: mockIdentityData, status: .set))
+        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.identity", event: sendRawNotificationsEvent, data: (value: mockIdentityData, status: .set))
 
         target.onRegistered()
 
@@ -1524,9 +1524,9 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             return
         }
 
-        XCTAssertTrue(target.readyForEvent(sendRawNotificationEvent))
+        XCTAssertTrue(target.readyForEvent(sendRawNotificationsEvent))
         // handles the send raw notification event
-        eventListener(sendRawNotificationEvent)
+        eventListener(sendRawNotificationsEvent)
         wait(for: [notificationExpectation], timeout: 2)
 
         // Check the notifications are cleared
@@ -1541,7 +1541,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         XCTAssertEqual("DE03D4AD-1FFE-421F-B2F2-303BF26822C1.35_0", mockRuntime.createdSharedStates[0]?["tntid"] as? String)
     }
     
-    func testSendRawNotification_withPropertyTokenInConfigurationAndEventData() {
+    func testSendRawNotifications_withPropertyTokenInConfigurationAndEventData() {
         // mocked network response
         let responseString = """
             {
@@ -1581,13 +1581,13 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             "israwevent": true
         ]
         
-        let sendRawNotificationEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let sendRawNotificationsEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
         
         // creates a configuration shared state
-        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationEvent, data: (value: mockConfigSharedState, status: .set))
+        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationsEvent, data: (value: mockConfigSharedState, status: .set))
 
         // creates an identity shared state
-        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.identity", event: sendRawNotificationEvent, data: (value: mockIdentityData, status: .set))
+        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.identity", event: sendRawNotificationsEvent, data: (value: mockIdentityData, status: .set))
 
         target.onRegistered()
 
@@ -1678,9 +1678,9 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             return
         }
 
-        XCTAssertTrue(target.readyForEvent(sendRawNotificationEvent))
+        XCTAssertTrue(target.readyForEvent(sendRawNotificationsEvent))
         // handles the send raw notification event
-        eventListener(sendRawNotificationEvent)
+        eventListener(sendRawNotificationsEvent)
         wait(for: [notificationExpectation], timeout: 2)
 
         // Check the notifications are cleared
@@ -1695,7 +1695,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         XCTAssertEqual("DE03D4AD-1FFE-421F-B2F2-303BF26822C1.35_0", mockRuntime.createdSharedStates[0]?["tntid"] as? String)
     }
 
-    func testSendRawNotification_afterExecuteRequestForClick() {
+    func testSendRawNotifications_afterExecuteRequestForClick() {
         // mocked network response
         let responseString = """
             {
@@ -1839,7 +1839,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             "israwevent": true
         ]
 
-        let sendRawNotificationEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: notificationData)
+        let sendRawNotificationsEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: notificationData)
         
         let notificationExpectation = XCTestExpectation(description: "Target raw notification expectation")
         
@@ -1879,7 +1879,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         }
 
         // simulate send raw notification event
-        mockRuntime.simulateComingEvent(event: sendRawNotificationEvent)
+        mockRuntime.simulateComingEvent(event: sendRawNotificationsEvent)
         wait(for: [notificationExpectation], timeout: 2)
         
         // Check the notifications are cleared
@@ -1894,7 +1894,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         XCTAssertEqual("DE03D4AD-1FFE-421F-B2F2-303BF26822C1.35_0", mockRuntime.createdSharedStates[0]?["tntid"] as? String)
     }
     
-    func testSendRawNotification_afterRawPrefetchRequestForDisplay() {
+    func testSendRawNotifications_afterRawPrefetchRequestForDisplay() {
         // mocked network response
         let responseString = """
             {
@@ -2032,7 +2032,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             "israwevent": true
         ]
 
-        let sendRawNotificationEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: notificationData)
+        let sendRawNotificationsEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: notificationData)
         
         let notificationExpectation = XCTestExpectation(description: "Target raw notification expectation")
         
@@ -2072,7 +2072,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         }
 
         // simulate send raw notification event
-        mockRuntime.simulateComingEvent(event: sendRawNotificationEvent)
+        mockRuntime.simulateComingEvent(event: sendRawNotificationsEvent)
         wait(for: [notificationExpectation], timeout: 2)
         
         // Check the notifications are cleared
@@ -2087,7 +2087,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
         XCTAssertEqual("DE03D4AD-1FFE-421F-B2F2-303BF26822C1.35_0", mockRuntime.createdSharedStates[0]?["tntid"] as? String)
     }
 
-    func testSendRawNotification_noNotificationsInDictionary() {
+    func testSendRawNotifications_noNotificationsInDictionary() {
         MockNetworkService.request = nil
         ServiceProvider.shared.networkService = MockNetworkService()
         
@@ -2095,10 +2095,10 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             "israwevent": true
         ]
         
-        let sendRawNotificationEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let sendRawNotificationsEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
         
         // creates a configuration shared state
-        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationEvent, data: (value: mockConfigSharedState, status: .set))
+        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationsEvent, data: (value: mockConfigSharedState, status: .set))
         
         target.onRegistered()
 
@@ -2118,14 +2118,14 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             XCTFail()
             return
         }
-        XCTAssertTrue(target.readyForEvent(sendRawNotificationEvent))
+        XCTAssertTrue(target.readyForEvent(sendRawNotificationsEvent))
         
         // handles the send raw notification event
-        eventListener(sendRawNotificationEvent)
+        eventListener(sendRawNotificationsEvent)
         wait(for: [notificationExpectation], timeout: 1)
     }
 
-    func testSendRawNotification_notificationErrorResponse() {
+    func testSendRawNotifications_notificationErrorResponse() {
         // mocked network response
         let responseString = """
             {
@@ -2152,13 +2152,13 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             "israwevent": true
         ]
         
-        let sendRawNotificationEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let sendRawNotificationsEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
         
         // creates a configuration shared state
-        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationEvent, data: (value: mockConfigSharedState, status: .set))
+        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationsEvent, data: (value: mockConfigSharedState, status: .set))
 
         // creates an identity shared state
-        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.identity", event: sendRawNotificationEvent, data: (value: mockIdentityData, status: .set))
+        mockRuntime.simulateSharedState(extensionName: "com.adobe.module.identity", event: sendRawNotificationsEvent, data: (value: mockIdentityData, status: .set))
 
         target.onRegistered()
 
@@ -2179,10 +2179,10 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             XCTFail()
             return
         }
-        XCTAssertTrue(target.readyForEvent(sendRawNotificationEvent))
+        XCTAssertTrue(target.readyForEvent(sendRawNotificationsEvent))
 
         // handles the send raw notification event
-        eventListener(sendRawNotificationEvent)
+        eventListener(sendRawNotificationsEvent)
         wait(for: [notificationExpectation], timeout: 2)
 
         // Check the notifications are cleared

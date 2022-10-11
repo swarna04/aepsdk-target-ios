@@ -1873,7 +1873,7 @@ class TargetIntegrationTests: XCTestCase {
         wait(for: [targetRequestExpectation], timeout: 2)
     }
 
-    func testSendRawNotification_typeClick() {
+    func testSendRawNotifications_typeClick() {
         let responseString = """
             {
               "status": 200,
@@ -2017,11 +2017,11 @@ class TargetIntegrationTests: XCTestCase {
                 ]
             ]
         ]
-        Target.sendRawNotification(notificationRequestData)
+        Target.sendRawNotifications(notificationRequestData)
         wait(for: [targetNotificationExpectation], timeout: 2)
     }
     
-    func testSendRawNotification_typeDisplay() {
+    func testSendRawNotifications_typeDisplay() {
         let responseString = """
             {
               "status": 200,
@@ -2155,7 +2155,7 @@ class TargetIntegrationTests: XCTestCase {
                 ]
             ]
         ]
-        Target.sendRawNotification(notificationRequestData)
+        Target.sendRawNotifications(notificationRequestData)
         wait(for: [targetNotificationExpectation], timeout: 2)
     }
 }

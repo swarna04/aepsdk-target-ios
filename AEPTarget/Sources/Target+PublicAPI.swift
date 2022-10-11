@@ -446,8 +446,8 @@ import Foundation
     ///
     /// - Parameters:
     ///   - request: A dictionary containing notifications data in the Target v1 delivery API format.
-    @objc(sendRawNotification:)
-    static func sendRawNotification(_ request: [String: Any]) {
+    @objc(sendRawNotifications:)
+    static func sendRawNotifications(_ request: [String: Any]) {
         if request.isEmpty {
             Log.warning(label: LOG_TAG, "Failed to send raw Target notification, provided request dictionary is empty.")
             return
