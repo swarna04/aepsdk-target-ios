@@ -461,7 +461,7 @@ import Foundation
         var eventData = request
         eventData[TargetConstants.EventDataKeys.IS_RAW_EVENT] = true
 
-        let event = Event(name: TargetConstants.EventName.TARGET_RAW_NOTIFICATION, type: EventType.target, source: EventSource.requestContent, data: eventData)
+        let event = Event(name: TargetConstants.EventName.TARGET_RAW_NOTIFICATIONS, type: EventType.target, source: EventSource.requestContent, data: eventData)
         MobileCore.dispatch(event: event)
     }
 }
