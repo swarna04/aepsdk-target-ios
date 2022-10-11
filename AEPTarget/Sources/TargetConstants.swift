@@ -178,7 +178,7 @@ enum TargetConstants {
         static let TARGET_REQUEST_RESPONSE = "TargetRequestResponse"
         static let TARGET_RAW_REQUEST = "TargetRawRequest"
         static let TARGET_RAW_RESPONSE = "TargetRawResponse"
-        static let TARGET_RAW_NOTIFICATION = "TargetRawNotification"
+        static let TARGET_RAW_NOTIFICATIONS = "TargetRawNotifications"
         static let ANALYTICS_FOR_TARGET_REQUEST_EVENT_NAME = "AnalyticsForTargetRequest"
     }
 

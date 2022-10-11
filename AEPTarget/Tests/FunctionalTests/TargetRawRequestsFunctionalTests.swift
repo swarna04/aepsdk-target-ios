@@ -1257,7 +1257,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             "israwevent": true
         ]
         
-        let sendRawNotificationsEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let sendRawNotificationsEvent = Event(name: "TargetRawNotifications", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
         
         // creates a configuration shared state
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationsEvent, data: (value: mockConfigSharedState, status: .set))
@@ -1427,7 +1427,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             "israwevent": true
         ]
         
-        let sendRawNotificationsEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let sendRawNotificationsEvent = Event(name: "TargetRawNotifications", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
         
         // creates a configuration shared state
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationsEvent, data: (value: mockConfigSharedState, status: .set))
@@ -1581,7 +1581,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             "israwevent": true
         ]
         
-        let sendRawNotificationsEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let sendRawNotificationsEvent = Event(name: "TargetRawNotifications", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
         
         // creates a configuration shared state
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationsEvent, data: (value: mockConfigSharedState, status: .set))
@@ -1839,7 +1839,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             "israwevent": true
         ]
 
-        let sendRawNotificationsEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: notificationData)
+        let sendRawNotificationsEvent = Event(name: "TargetRawNotifications", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: notificationData)
         
         let notificationExpectation = XCTestExpectation(description: "Target raw notification expectation")
         
@@ -2032,7 +2032,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             "israwevent": true
         ]
 
-        let sendRawNotificationsEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: notificationData)
+        let sendRawNotificationsEvent = Event(name: "TargetRawNotifications", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: notificationData)
         
         let notificationExpectation = XCTestExpectation(description: "Target raw notification expectation")
         
@@ -2095,7 +2095,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             "israwevent": true
         ]
         
-        let sendRawNotificationsEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let sendRawNotificationsEvent = Event(name: "TargetRawNotifications", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
         
         // creates a configuration shared state
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationsEvent, data: (value: mockConfigSharedState, status: .set))
@@ -2152,7 +2152,7 @@ class TargetRawRequestsFunctionalTests: TargetFunctionalTestsBase {
             "israwevent": true
         ]
         
-        let sendRawNotificationsEvent = Event(name: "TargetRawNotification", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
+        let sendRawNotificationsEvent = Event(name: "TargetRawNotifications", type: "com.adobe.eventType.target", source: "com.adobe.eventSource.requestContent", data: data)
         
         // creates a configuration shared state
         mockRuntime.simulateSharedState(extensionName: "com.adobe.module.configuration", event: sendRawNotificationsEvent, data: (value: mockConfigSharedState, status: .set))
