@@ -393,12 +393,10 @@ import Foundation
         }
     }
 
-    /// Retrieves Target prefetch or execute response for an array of mbox locations.
-    ///
-    /// It issues a request to the configured Target server for the provided mbox locations in the request.
+    /// Retrieves Target prefetch or execute response for mbox locations from the configured Target server.
     ///
     /// - Parameters:
-    ///   - request: a dictionary containing prefetch or execute request data in the Target v1 delivery API format.
+    ///   - request: a dictionary containing prefetch or execute request data in the Target v1 delivery API request format.
     ///   - completion: the callback which will be invoked with the Target response data or error message after the request is completed.
     @objc(executeRawRequest:completion:)
     static func executeRawRequest(_ request: [String: Any], _ completion: @escaping ([String: Any]?, Error?) -> Void) {
@@ -440,12 +438,12 @@ import Foundation
         }
     }
 
-    /// Sends a notification request to Target using the provided notification data in the request.
+    /// Sends notification request(s) to Target using the provided notification data in the request.
     ///
-    /// The display or click tokens, required for the Target notifications, can be retrieved from the response of a previous `executeRawRequest` API call.
+    /// The display or click event tokens, required for the Target notifications, can be retrieved from the response of a prior `executeRawRequest` API call.
     ///
     /// - Parameters:
-    ///   - request: A dictionary containing notifications data in the Target v1 delivery API format.
+    ///   - request: A dictionary containing notifications data in the Target v1 delivery API request format.
     @objc(sendRawNotifications:)
     static func sendRawNotifications(_ request: [String: Any]) {
         if request.isEmpty {
