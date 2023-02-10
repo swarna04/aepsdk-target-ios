@@ -99,6 +99,21 @@
     - [Objective C](#objc-visual-preview)
       - [Syntax](#objc-syntax-visual-preview)
       - [Example](#objc-example-visual-preview)
+- [Target Raw API reference](#target-raw-api-reference)
+- [executeRawRequest](#executerawrequest)
+    - [Swift](#swift-executerawrequest)
+      - [Syntax](#swift-syntax-executerawrequest)
+      - [Example](#swift-example-executerawrequest)
+    - [Objective C](#objc-executerawrequest)
+      - [Syntax](#objc-syntax-executerawrequest)
+      - [Example](#objc-example-executerawrequest)
+- [sendRawNotification](#sendrawnotification)
+    - [Swift](#swift-sendrawnotification)
+      - [Syntax](#swift-syntax-sendrawnotification)
+      - [Example](#swift-example-sendrawnotification)
+    - [Objective C](#objc-sendrawnotification)
+      - [Syntax](#objc-syntax-sendrawnotification)
+      - [Example](#objc-example-sendrawnotification)
 
 # Target API reference
 This document details all the APIs provided by Target, along with sample code snippets on how to properly use the APIs.
@@ -794,7 +809,7 @@ static func clickedLocation(_ name: String, targetParameters: TargetParameters?)
 ```
 
 
-## Viaual preview
+## Visual preview
 
 The visual preview mode allows you to easily perform end-to-end QA activities by enrolling and previewing these activities on your device. This mode does not require a specialized testing set up. To get started, set up a URL scheme and generate the preview links.
 
@@ -826,4 +841,218 @@ public static func collectLaunchInfo(_ userInfo: [String: Any])
 
 ```objectivec
     [AEPMobileCore collectLaunchInfo: @{@"adb_deeplink":@"com.adobe.targetpreview://app.adobetarget.com?at_preview_token=tokenFromTarget"}];
+```
+
+# Target Raw API reference
+This document details all the raw APIs provided by Target, along with sample code snippets on how to properly use the APIs.
+
+## executeRawRequest
+This API can be used to retrieve prefetch or execute response for mbox locations from the configured Target server. 
+
+### Swift 
+
+#### Syntax 
+
+```swift
+static func executeRawRequest(_ request: [[String: Any]], _ completion: @escaping ([[String: Any]]?, Error?) -> Void)
+```
+
+  - *request* - is a dictionary containing prefetch or execute request data in the Target v1 delivery API request format. 
+  - *completion* - is the callback which will be invoked with the Target response data or error message after the request is completed. 
+
+#### Example
+
+```swift
+    let request: [String: Any] = [ 
+        "execute": [ 
+            "mboxes": [ 
+                [
+                    "index": 0, 
+                    "name": "mbox1", 
+                    "parameters": [ 
+                        "mbox_parameter_key1": "mbox_parameter_value1" 
+                    ], 
+                    "profileParameters": [ 
+                        "subscription": "premium" 
+                    ], 
+                    "order": [ 
+                        "id": "id1", 
+                        "total": 100.34, 
+                        "purchasedProductIds":[ 
+                            "pId1"
+                        ] 
+                    ], 
+                    "product": [ 
+                        "id": "pId1", 
+                        "categoryId": "cId1" 
+                    ]
+                ], 
+                [
+                    "index": 1, 
+                    "name": "mbox2", 
+                    "parameters": [ 
+                        "mbox_parameter_key2": "mbox_parameter_value2" 
+                    ]
+                ]
+            ]
+        ]
+    ] 
+
+Target.executeRawRequest(request) { responseData, error in 
+    if error != nil { 
+        return 
+    } 
+    guard let responseData = responseData, 
+          !responseData.isEmpty else { 
+        return 
+    } 
+
+    // handle the response   
+
+} 
+```
+
+### Objective C
+
+#### Syntax 
+
+```objectivec
++ (void)executeRawRequest:(nonnull NSDictionary<NSString *, id> *)request completion:(void (nonnull ^)(nullable NSDictionary<NSString *, id> *, nullable NSError *))completion; 
+```
+
+  - *request* : is a dictionary containing prefetch or execute request data in the Target v1 delivery API request format. 
+  - *completion* : is the  the callback which will be invoked with the Target response data or error message after the request is completed.
+
+#### Example
+
+```objectivec
+    NSDictionary *request = @{ 
+        @"execute": @{ 
+            @"mboxes": @[ 
+                @{ 
+                    @"index": @(0), 
+                    @"name": @"mbox1", 
+                    @"parameters": @{ 
+                        @"mbox_parameter_key1": @"mbox_parameter_value1" 
+                    }, 
+                    @"profileParameters": @{ 
+                        @"subscription": @"premium" 
+                    }, 
+                    @"order": @{ 
+                        @"id": @"id1", 
+                        @"total": @(100.34), 
+                        @"purchasedProductIds": @[ 
+                            @"pId1" 
+                        ]
+                    }, 
+                    @"product": @{ 
+                        @"id": @"pId1", 
+                        @"categoryId": @"cId1" 
+                    } 
+                }, 
+                @{ 
+                    @"index": @(1), 
+                    @"name": @"mbox2", 
+                    @"parameters": @{ 
+                        @"mbox_parameter_key2": @"mbox_parameter_value2" 
+                    } 
+
+                } 
+
+            ] 
+
+        } 
+
+    }; 
+
+    [AEPMobileTarget executeRawRequest:request completion:^(NSDictionary<NSString *,id> * _Nullable data, NSError * _Nullable err) { 
+        if (err != nil) { 
+            NSLog(@"Error: %@", err); 
+            return; 
+        } 
+
+        NSLog(@"Target raw response >> %@", data); 
+
+        // handle response 
+    }]; 
+```
+
+
+## sendrawnotification
+This API sends notification request(s) to the configured Target server for display or click notifications. 
+
+The event tokens required for the Target display or click notifications can be retrieved from the response of a prior `executeRawRequest` API call for prefetch or execute.  
+
+### Swift 
+
+#### Syntax 
+
+```swift
+static func sendRawNotifications(_ request: [String: Any]) 
+```
+
+  - *request* - is a dictionary containing notifications data in the Target v1 delivery API request format.
+ 
+#### Example
+
+```swift
+    var notifications: [[String: Any]] = [] 
+
+    let notification: [String: Any] = [
+        "id": "0", 
+        "timestamp": Int64(Date().timeIntervalSince1970 * 1000.0), 
+        "type": "click", 
+        "mbox": [ 
+            "name": "mbox1" 
+        ], 
+        "tokens": [ 
+            "someClickToken" 
+        ], 
+        "parameters": [ 
+            "mbox_parameter_key3": "mbox_parameter_value3" 
+        ] 
+
+    ] 
+    notifications.append(notification) 
+
+    Target.sendRawNotifications([ 
+        "notifications": notifications 
+    ]) 
+```
+
+### Objective C
+
+#### Syntax 
+
+```objectivec
++ (void)sendRawNotifications:(nonnull NSDictionary<NSString *, id> *)request;  
+```
+
+  - *request* : is a dictionary containing notifications data in the Target v1 delivery API request format.
+
+#### Example
+
+```objectivec
+    NSMutableArray *notifications = [[NSMutableArray alloc] init]; 
+
+    NSDictionary* notification = @{ 
+
+        @"id": @"0", 
+        @"timestamp": @((long)([[NSDate date] timeIntervalSince1970] * 1000.0)), 
+        @"type": @"click", 
+        @"mbox": @{ 
+            @"name": @"mbox1", 
+        }, 
+        @"tokens": @[ @"someClickToken" ], 
+        @"parameters": @{ 
+            @"mbox_parameter_key3": @"mbox_parameter_value3" 
+        } 
+
+    }; 
+    [notifications addObject:notification]; 
+
+    NSDictionary *request = @{ 
+      @"notifications": notifications 
+    }; 
+    [AEPMobileTarget sendRawNotifications:request];  
 ```
