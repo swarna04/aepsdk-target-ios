@@ -2,118 +2,22 @@
 - [Table of Contents](#table-of-contents)
 - [Target API reference](#target-api-reference)
   - [prefetchContent](#prefetchcontent)
-    - [Swift](#swift-prefetchcontent)
-      - [Syntax](#swift-syntax-prefetchcontent)
-      - [Example](#swift-example-prefetchcontent)
-    - [Objective C](#objc-prefetchcontent)
-      - [Syntax](#objc-syntax-prefetchcontent)
-      - [Example](#objc-example-prefetchcontent)
   - [retrieveLocationContent](#retrievelocationcontent)
-    - [Swift](#swift-retrievelocationcontent)
-      - [Syntax](#swift-syntax-retrievelocationcontent)
-      - [Example](#swift-example-retrievelocationcontent)
-    - [Objective C](#objc-retrievelocationcontent)
-      - [Syntax](#objc-syntax-retrievelocationcontent)
-      - [Example](#objc-example-retrievelocationcontent)
   - [setThirdPartyId](#setthirdpartyid)
-    - [Swift](#swift-setthirdpartyid)
-      - [Syntax](#swift-syntax-setthirdpartyid)
-      - [Example](#swift-example-setthirdpartyid)
-    - [Objective C](#objc-setthirdpartyid)
-      - [Syntax](#objc-syntax-setthirdpartyid)
-      - [Example](#objc-example-setthirdpartyid)
   - [getThirdPartyId](#getthirdpartyid)
-    - [Swift](#swift-getthirdpartyid)
-      - [Syntax](#swift-syntax-getthirdpartyid)
-      - [Example](#swift-example-getthirdpartyid)
-    - [Objective C](#objc-getthirdpartyid)
-      - [Syntax](#objc-syntax-getthirdpartyid)
-      - [Example](#objc-example-getthirdpartyid)
   - [setTntId](#settntid)
-    - [Swift](#swift-settntid)
-      - [Syntax](#swift-syntax-settntid)
-      - [Example](#swift-example-settntid)
-   - [Objective C](#objc-settntid)
-      - [Syntax](#objc-syntax-settntid)
-      - [Example](#objc-example-settntid)
   - [getTntId](#gettntid)
-    - [Swift](#swift-gettntid)
-      - [Syntax](#swift-syntax-gettntid)
-      - [Example](#swift-example-gettntid)
-    - [Objective C](#objc-gettntid)
-      - [Syntax](#objc-syntax-gettntid)
-      - [Example](#objc-example-gettntid)
   - [setSessionId](#setsessionid)
-    - [Swift](#swift-setsessionid)
-      - [Syntax](#swift-syntax-setsessionid)
-      - [Example](#swift-example-setsessionid)
-   - [Objective C](#objc-setsessionid)
-      - [Syntax](#objc-syntax-setsessionid)
-      - [Example](#objc-example-setsessionid)
   - [getSessionId](#getsessionid)
-    - [Swift](#swift-getsessionid)
-      - [Syntax](#swift-syntax-getsessionid)
-      - [Example](#swift-example-getsessionid)
-    - [Objective C](#objc-getsessionid)
-      - [Syntax](#objc-syntax-getsessionid)
-      - [Example](#objc-example-getsessionid)
   - [resetExperience](#resetexperience)
-    - [Swift](#swift-resetexperience)
-      - [Syntax](#swift-syntax-resetexperience)
-      - [Example](#swift-example-resetexperience)
-    - [Objective C](#objc-resetexperience)
-      - [Syntax](#objc-syntax-resetexperience)
-      - [Example](#objc-example-resetexperience)
   - [clearPrefetchCache](#clearprefetchcache)
-    - [Swift](#swift-clearprefetchcache)
-      - [Syntax](#swift-syntax-clearprefetchcache)
-      - [Example](#swift-example-clearprefetchcache)
-    - [Objective C](#objc-clearprefetchcache)
-      - [Syntax](#objc-syntax-clearprefetchcache)
-      - [Example](#objc-example-clearprefetchcache)
   - [setPreviewRestartDeepLink](#setpreviewrestartdeeplink)
-    - [Swift](#swift-setpreviewrestartdeeplink)
-      - [Syntax](#swift-syntax-setpreviewrestartdeeplink)
-      - [Example](#swift-example-setpreviewrestartdeeplink)
-    - [Objective C](#objc-setpreviewrestartdeeplink)
-      - [Syntax](#objc-syntax-setpreviewrestartdeeplink)
-      - [Example](#objc-example-setpreviewrestartdeeplink)
   - [displayedLocations](#displayedlocations)
-    - [Swift](#swift-displayedlocations)
-      - [Syntax](#swift-syntax-displayedlocations)
-      - [Example](#swift-example-displayedlocations)
-    - [Objective C](#objc-displayedlocations)
-      - [Syntax](#objc-syntax-displayedlocations)
-      - [Example](#objc-example-displayedlocations)
   - [clickedLocation](#clickedlocation)
-    - [Swift](#swift-clickedlocation)
-      - [Syntax](#swift-syntax-clickedlocation)
-      - [Example](#swift-example-clickedlocation)
-    - [Objective C](#objc-clickedlocation)
-      - [Syntax](#objc-syntax-clickedlocation)
-      - [Example](#objc-example-clickedlocation)
-  - [Visual preview](#visual-preview)
-    - [Swift](#swift-visual-preview)
-      - [Syntax](#swift-syntax-visual-preview)
-      - [Example](#swift-example-visual-preview)
-    - [Objective C](#objc-visual-preview)
-      - [Syntax](#objc-syntax-visual-preview)
-      - [Example](#objc-example-visual-preview)
 - [Target Raw API reference](#target-raw-api-reference)
-- [executeRawRequest](#executerawrequest)
-    - [Swift](#swift-executerawrequest)
-      - [Syntax](#swift-syntax-executerawrequest)
-      - [Example](#swift-example-executerawrequest)
-    - [Objective C](#objc-executerawrequest)
-      - [Syntax](#objc-syntax-executerawrequest)
-      - [Example](#objc-example-executerawrequest)
-- [sendRawNotification](#sendrawnotification)
-    - [Swift](#swift-sendrawnotification)
-      - [Syntax](#swift-syntax-sendrawnotification)
-      - [Example](#swift-example-sendrawnotification)
-    - [Objective C](#objc-sendrawnotification)
-      - [Syntax](#objc-syntax-sendrawnotification)
-      - [Example](#objc-example-sendrawnotification)
+  - [executeRawRequest](#executerawrequest)
+  - [sendRawNotification](#sendrawnotification)
+- [Visual preview](#visual-preview)
 
 # Target API reference
 This document details all the APIs provided by Target, along with sample code snippets on how to properly use the APIs.
@@ -121,7 +25,7 @@ This document details all the APIs provided by Target, along with sample code sn
 ## prefetchContent
 This API sends a prefetch request to your configured Target server with the prefetch objects array and the specified target parameters. 
 
-### Swift 
+### Swift
 
 #### Syntax 
 
@@ -809,40 +713,6 @@ static func clickedLocation(_ name: String, targetParameters: TargetParameters?)
 ```
 
 
-## Visual preview
-
-The visual preview mode allows you to easily perform end-to-end QA activities by enrolling and previewing these activities on your device. This mode does not require a specialized testing set up. To get started, set up a URL scheme and generate the preview links.
-
-To enter the preview visual mode, use the `collectLaunchInfo` API to enable the mode and click the red floating button that appears on the app screen.
-
-### Swift 
-
-#### Syntax 
-
-```swift
-public static func collectLaunchInfo(_ userInfo: [String: Any])
-```
-
-#### Example
-
-```swift
-    MobileCore.collectLaunchInfo(["adb_deeplink" : "com.adobe.targetpreview://app.adobetarget.com?at_preview_token=tokenFromTarget"])
-```
-
-### Objective C
-
-#### Syntax 
-
-```objectivec
-+ (void) collectLaunchInfo: (nonnull NSDictionary*) userInfo;
-```
-
-#### Example
-
-```objectivec
-    [AEPMobileCore collectLaunchInfo: @{@"adb_deeplink":@"com.adobe.targetpreview://app.adobetarget.com?at_preview_token=tokenFromTarget"}];
-```
-
 # Target Raw API reference
 This document details all the raw APIs provided by Target, along with sample code snippets on how to properly use the APIs.
 
@@ -1055,4 +925,26 @@ static func sendRawNotifications(_ request: [String: Any])
       @"notifications": notifications 
     }; 
     [AEPMobileTarget sendRawNotifications:request];  
+```
+
+# Visual preview
+
+The visual preview mode allows you to easily perform end-to-end QA of activities by enrolling and previewing these activities on your device. This mode does not require a specialized testing set up. To get started, set up a URL scheme and generate the preview links. For more information on setting up URL schemes, see [Defining a Custom URL Scheme for Your App](https://developer.apple.com/documentation/xcode/defining-a-custom-url-scheme-for-your-app) for iOS and see [Create Deep Links to App Content](https://developer.android.com/training/app-links/deep-linking) for Android. You can also set an application deep link in the SDK that can be triggered when selections are made in the preview mode by using the `setPreviewRestartDeeplink` API.
+
+To enter the preview visual mode, use the Mobile Core's `collectLaunchInfo` API to enable the mode and click the red floating button that appears on the app screen.
+
+### Swift 
+
+#### Example
+
+```swift
+    MobileCore.collectLaunchInfo(["adb_deeplink" : "com.adobe.targetpreview://app.adobetarget.com?at_preview_token=tokenFromTarget"])
+```
+
+### Objective C
+
+#### Example
+
+```objectivec
+    [AEPMobileCore collectLaunchInfo: @{@"adb_deeplink":@"com.adobe.targetpreview://app.adobetarget.com?at_preview_token=tokenFromTarget"}];
 ```
