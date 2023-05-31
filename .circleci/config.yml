@@ -102,7 +102,7 @@ jobs:
       - codecov/upload:
           flags: aeptarget-ios-tests
           upload_name: Coverage Report for AEPTarget iOS Tests
-          xtra_args: -c -v --xc --xp ioscoreresults.xcresult
+          xtra_args: -c -v --xc --xp build/AEPTarget.xcresult
 
   test-spm-podspec-archive:  
     macos:
