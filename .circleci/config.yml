@@ -22,6 +22,7 @@ commands:
     steps:
       # restore pods related caches
       - restore_cache:
+          name: Restore Gemfile Cache
           keys:
             - 1-gems-{{ checksum "Gemfile.lock" }}
 
@@ -32,12 +33,14 @@ commands:
 
       # save cocoapods version gem data
       - save_cache:
+          name: Save Gemfile Cache
           key: 1-gems-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
 
       # restore pods related caches
       - restore_cache:
+          name: Restore CocoaPods Cache
           keys:
             - cocoapods-cache-v5-{{ arch }}-{{ .Branch }}-{{ checksum "Podfile.lock" }}
             - cocoapods-cache-v5-{{ arch }}-{{ .Branch }}
@@ -50,7 +53,7 @@ commands:
 
       # save pods related files
       - save_cache:
-          name: Saving CocoaPods Cache
+          name: Save CocoaPods Cache
           key: cocoapods-cache-v5-{{ arch }}-{{ .Branch }}-{{ checksum "Podfile.lock" }}
           paths:
             - ./Pods
@@ -102,7 +105,7 @@ jobs:
       - codecov/upload:
           flags: aeptarget-ios-tests
           upload_name: Coverage Report for AEPTarget iOS Tests
-          xtra_args: -c -v --xc --xp build/AEPTarget.xcresult
+          xtra_args: -c -v --xc --xp ./build/AEPTarget.xcresult
 
   test-spm-podspec-archive:  
     macos:
