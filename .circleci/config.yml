@@ -84,7 +84,6 @@ jobs:
           name: Lint Source Code
           command: make lint; make check-format
 
-
   test-ios:
     macos:
       xcode: 14.1.0 # Specify the Xcode version to use
