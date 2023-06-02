@@ -35,5 +35,5 @@ target 'AEPTargetTests' do
   pod 'AEPIdentity'
   pod 'AEPLifecycle'
   pod 'AEPAnalytics'
-  pod 'SwiftyJSON', '~> 4.0'
+  pod 'SwiftyJSON', '~> 5.0'
 end
