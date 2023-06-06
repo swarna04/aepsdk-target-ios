@@ -1,7 +1,7 @@
 PODS:
-  - AEPAnalytics (3.2.0):
-    - AEPCore (>= 3.7.0)
-    - AEPServices (>= 3.7.0)
+  - AEPAnalytics (4.0.0):
+    - AEPCore (>= 4.0.0)
+    - AEPServices (>= 4.0.0)
   - AEPAssurance (4.0.0):
     - AEPCore (>= 4.0.0)
     - AEPServices (>= 4.0.0)
@@ -43,7 +43,7 @@ SPEC REPOS:
     - SwiftyJSON
 
 SPEC CHECKSUMS:
-  AEPAnalytics: b83efee29b4323537cbce4b8f146d26cee6cdc80
+  AEPAnalytics: a510eb9653fac7f913965ad4291c8d51f74ffdcd
   AEPAssurance: 4fa3138ddd7308c1f9923570f4d2b0b8526a916f
   AEPCore: dd7cd69696c768c610e6adc0307032985a381c7e
   AEPIdentity: 45ee1c3717e08ff3ca60930caf4a869d60d7bf08
