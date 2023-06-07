@@ -7,7 +7,7 @@ use_frameworks!
 workspace 'AEPTarget'
 project 'AEPTarget.xcodeproj'
 
-pod 'SwiftLint', '0.44.0'
+pod 'SwiftLint', '0.52.0'
 
 target 'AEPTarget' do
   pod 'AEPCore'
@@ -35,5 +35,5 @@ target 'AEPTargetTests' do
   pod 'AEPIdentity'
   pod 'AEPLifecycle'
   pod 'AEPAnalytics'
-  pod 'SwiftyJSON', '~> 4.0'
+  pod 'SwiftyJSON', '~> 5.0'
 end
