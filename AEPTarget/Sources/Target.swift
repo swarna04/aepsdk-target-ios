@@ -576,9 +576,8 @@ public class Target: NSObject, Extension {
 
         let coreVersion = eventHubData[TargetConstants.EventHub.SharedState.Keys.VERSION] as? String ?? "unknown"
 
-        // sdkVersion is a combination of Core+Target SDK version
-        let sdkVersion = "\(coreVersion)+\(TargetConstants.EXTENSION_VERSION)"
-        return sdkVersion
+        // sdkVersion is a combination of Mobile Core+Target SDK version
+        return "\(coreVersion)+\(TargetConstants.EXTENSION_VERSION)"
     }
 
     /// Prepares for the target requests and checks whether a target request can be sent.
