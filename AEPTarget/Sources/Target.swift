@@ -594,7 +594,7 @@ public class Target: NSObject, Extension {
             return sdkBase
         }
 
-        // sdkInfo is of the format AdobeTargetMobile-iOS<-wrapperFriendlyName>
+        // sdkInfo is of the format AdobeTargetMobile-iOS-<wrapperFriendlyName>
         return "\(sdkBase)-\(wrapperFriendlyName)"
     }
 
