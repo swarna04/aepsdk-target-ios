@@ -715,7 +715,8 @@ class TargetIntegrationTests: XCTestCase {
                         "content": "someContent",
                         "type": "html",
                         "responseTokens":{
-                            "activity.name":"My test activity"
+                            "activity.name":"My test activity",
+                            "profile.categoryAffinities" : ["shoes"]
                         }
                       }
                     ],
@@ -766,9 +767,10 @@ class TargetIntegrationTests: XCTestCase {
             XCTAssertEqual("tnt", analyticsPayload?["pe"])
             XCTAssertEqual("331289:0:0|2|1,331289:0:0|32767|1", analyticsPayload?["tnta"])
 
-            let responseTokens = data["responseTokens"] as? [String: String]
-            XCTAssertEqual(1, responseTokens?.count)
-            XCTAssertEqual("My test activity", responseTokens?["activity.name"])
+            let responseTokens = data["responseTokens"] as? [String: Any]
+            XCTAssertEqual(2, responseTokens?.count)
+            XCTAssertEqual("My test activity", responseTokens?["activity.name"] as? String)
+            XCTAssertEqual(["shoes"], responseTokens?["profile.categoryAffinities"] as? [String])
             targetRequestExpectation.fulfill()
         }
 
@@ -797,7 +799,8 @@ class TargetIntegrationTests: XCTestCase {
                         "content": "someContent",
                         "type": "html",
                         "responseTokens":{
-                            "activity.name":"My test activity"
+                            "activity.name":"My test activity",
+                            "profile.categoryAffinities" : ["shoes"]
                         },
                         "eventToken": "uR0kIAPO+tZtIPW92S0NnWqipfsIHvVzTQxHolz2IpSCnQ9Y9OaLL2gsdrWQTvE54PwSz67rmXWmSnkXpSSS2Q=="
                       }
@@ -862,9 +865,10 @@ class TargetIntegrationTests: XCTestCase {
             XCTAssertEqual("tnt", analyticsPayload?["pe"])
             XCTAssertEqual("331289:0:0|2|1,331289:0:0|32767|1", analyticsPayload?["tnta"])
 
-            let responseTokens = data["responseTokens"] as? [String: String]
-            XCTAssertEqual(1, responseTokens?.count)
-            XCTAssertEqual("My test activity", responseTokens?["activity.name"])
+            let responseTokens = data["responseTokens"] as? [String: Any]
+            XCTAssertEqual(2, responseTokens?.count)
+            XCTAssertEqual("My test activity", responseTokens?["activity.name"] as? String)
+            XCTAssertEqual(["shoes"], responseTokens?["profile.categoryAffinities"] as? [String])
             targetRequestExpectation.fulfill()
         }
         Target.retrieveLocationContent([retrieveRequest])
