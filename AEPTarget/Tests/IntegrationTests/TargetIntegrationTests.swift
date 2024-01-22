@@ -716,7 +716,7 @@ class TargetIntegrationTests: XCTestCase {
                         "type": "html",
                         "responseTokens":{
                             "activity.name":"My test activity",
-                            "profile.categoryAffinities" : ["shoes"]
+                            "profile.categoryAffinities" : [\"shoes\"]
                         }
                       }
                     ],
@@ -800,7 +800,7 @@ class TargetIntegrationTests: XCTestCase {
                         "type": "html",
                         "responseTokens":{
                             "activity.name":"My test activity",
-                            "profile.categoryAffinities" : ["shoes"]
+                            "profile.categoryAffinities" : [\"shoes\"]
                         },
                         "eventToken": "uR0kIAPO+tZtIPW92S0NnWqipfsIHvVzTQxHolz2IpSCnQ9Y9OaLL2gsdrWQTvE54PwSz67rmXWmSnkXpSSS2Q=="
                       }
