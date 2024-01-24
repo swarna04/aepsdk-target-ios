@@ -24,7 +24,7 @@ class TargetIntegrationTests: XCTestCase {
     private let dispatchQueue = DispatchQueue(label: "com.adobe.target.test")
     override func setUp() {
         FileManager.default.clear()
-        UserDefaults.clear()
+        NamedCollectionDataStore.clear()
         ServiceProvider.shared.reset()
         EventHub.reset()
     }
