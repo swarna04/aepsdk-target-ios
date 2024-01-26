@@ -716,7 +716,8 @@ class TargetIntegrationTests: XCTestCase {
                         "type": "html",
                         "responseTokens":{
                             "activity.name":"My test activity",
-                            "profile.categoryAffinities":["shoes"]
+                            "profile.categoryAffinities":["shoes"],
+                            "someKey":["someValue", true, 42]
                         }
                       }
                     ],
@@ -768,9 +769,13 @@ class TargetIntegrationTests: XCTestCase {
             XCTAssertEqual("331289:0:0|2|1,331289:0:0|32767|1", analyticsPayload?["tnta"])
 
             let responseTokens = data["responseTokens"] as? [String: Any]
-            XCTAssertEqual(2, responseTokens?.count)
+            XCTAssertEqual(3, responseTokens?.count)
             XCTAssertEqual("My test activity", responseTokens?["activity.name"] as? String)
             XCTAssertEqual(["shoes"], responseTokens?["profile.categoryAffinities"] as? [String])
+            let someArr = responseTokens?["someKey"] as? [Any]
+            XCTAssertEqual("someValue", someArr?[0] as? String)
+            XCTAssertEqual(true, someArr?[1] as? Bool)
+            XCTAssertEqual(42, someArr?[2] as? Int)
             targetRequestExpectation.fulfill()
         }
 
