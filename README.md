@@ -11,7 +11,7 @@ The `AEPTarget` helps test, personalize, and optimize mobile app experiences bas
 
 ## Requirements
 - Xcode 15 (or newer)
-- Swift 5.9 (or newer)
+- Swift 5.1 (or newer)
 
 ## Installation
 
