@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-platform :ios, '11.0'
+platform :ios, '12.0'
 
 # Comment the next line if you don't want to use dynamic frameworks
 use_frameworks!
@@ -10,11 +10,11 @@ project 'AEPTarget.xcodeproj'
 pod 'SwiftLint', '0.52.0'
 
 target 'AEPTarget' do
-  pod 'AEPCore'
+  pod 'AEPCore', :git => 'https://github.com/adobe/aepsdk-core-ios.git', :branch => 'dev-v5.0.0'
 end
 
 target 'AEPTargetDemoApp' do
-  pod 'AEPCore'
+  pod 'AEPCore', :git => 'https://github.com/adobe/aepsdk-core-ios.git', :branch => 'dev-v5.0.0'
   pod 'AEPIdentity'
   pod 'AEPLifecycle'
   pod 'AEPSignal'
@@ -23,7 +23,7 @@ target 'AEPTargetDemoApp' do
 end
   
 target 'AEPTargetDemoObjCApp' do
-  pod 'AEPCore'
+  pod 'AEPCore', :git => 'https://github.com/adobe/aepsdk-core-ios.git', :branch => 'dev-v5.0.0'
   pod 'AEPIdentity'
   pod 'AEPLifecycle'
   pod 'AEPAssurance'
@@ -31,7 +31,7 @@ target 'AEPTargetDemoObjCApp' do
 end
 
 target 'AEPTargetTests' do
-  pod 'AEPCore'
+  pod 'AEPCore', :git => 'https://github.com/adobe/aepsdk-core-ios.git', :branch => 'dev-v5.0.0'
   pod 'AEPIdentity'
   pod 'AEPLifecycle'
   pod 'AEPAnalytics'
